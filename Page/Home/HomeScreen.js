@@ -24,13 +24,24 @@ export default function HomeScreen() {
       <Slider mySlider={mySlider} />
       <View style={Styles.Grid}>
         <View>
-          <CardHome source={require("../../assets/navigation/back.png")} />
+          <CardHome source={require("../../assets/home/tires.png")} title='Auto Mechanics' />
         </View>
         <View>
-          <CardHome source={require("../../assets/navigation/back.png")} />
+          <CardHome source={require("../../assets/home/plumbing.png")} title='Plumbing Services' />
         </View>
         <View>
-          <CardHome source={require("../../assets/navigation/back.png")} />
+          <CardHome source={require("../../assets/home/electronic.png")} title='Electronic Services' />
+        </View>
+      </View>
+      <View style={Styles.Grid}>
+        <View>
+          <CardHome source={require("../../assets/home/shoes.png")} title='Taylor & Shoes' />
+        </View>
+        <View>
+          <CardHome source={require("../../assets/home/ac.png")} title='AC Services' />
+        </View>
+        <View>
+          <CardHome source={require("../../assets/home/electronic2.png")} title='Electrical Services' />
         </View>
       </View>
     </View>
@@ -52,5 +63,8 @@ const Styles = StyleSheet.create({
   },
   Grid: {
     flexDirection: "row",
+    justifyContent:'center',
+    alignSelf:'center',
+    bottom:80
   },
 });

@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Image } from "react-native";
 import Slider from "../../Component/Home/Slider";
+import CardHome from "../../Component/Card/CardHome";
 import axios from "axios";
 
 export default function HomeScreen() {
@@ -21,21 +22,35 @@ export default function HomeScreen() {
         style={Styles.logo}
       />
       <Slider mySlider={mySlider} />
+      <View style={Styles.Grid}>
+        <View>
+          <CardHome source={require("../../assets/navigation/back.png")} />
+        </View>
+        <View>
+          <CardHome source={require("../../assets/navigation/back.png")} />
+        </View>
+        <View>
+          <CardHome source={require("../../assets/navigation/back.png")} />
+        </View>
+      </View>
     </View>
   );
 }
 
 const Styles = StyleSheet.create({
-    container:{
-      flex:1,
-      backgroundColor:'#fff'
-    },
-    logo:{
-        justifyContent:'center',
-        alignSelf:'center',
-        width:100,
-        height:70,
-        marginBottom:10,
-        marginTop:30
-    },
-})
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  logo: {
+    justifyContent: "center",
+    alignSelf: "center",
+    width: 100,
+    height: 70,
+    marginBottom: 10,
+    marginTop: 30,
+  },
+  Grid: {
+    flexDirection: "row",
+  },
+});

@@ -3,10 +3,14 @@ import { View, StyleSheet, Image } from "react-native";
 import Slider from "../../Component/Home/Slider";
 import CardHome from "../../Component/Card/CardHome";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
   const [mySlider, setSlider] = useState([]);
-
+  const navigation = useNavigation();
+  const cardSelected = (selected) =>{
+    navigation.navigate(selected)
+  }
   useEffect(() => {
     const GetImages = () => {
       axios
@@ -24,10 +28,10 @@ export default function HomeScreen() {
       <Slider mySlider={mySlider} />
       <View style={Styles.Grid}>
         <View>
-          <CardHome source={require("../../assets/home/tires.png")} title='Auto Mechanics' />
+          <CardHome source={require("../../assets/home/tires.png")} title='Auto Mechanics' onPress={()=> cardSelected('Selected')} />
         </View>
         <View>
-          <CardHome source={require("../../assets/home/plumbing.png")} title='Plumbing Services' />
+          <CardHome source={require("../../assets/home/plumbing.png")} title='Plumbing Services' onPress={()=> cardSelected('Selected')} />
         </View>
         <View>
           <CardHome source={require("../../assets/home/electronic.png")} title='Electronic Services' />

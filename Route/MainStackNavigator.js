@@ -9,6 +9,7 @@ import HomeScreen from "../Page/Home/HomeScreen";
 import ProfileScreen from "../Page/Profile/ProfileScreen";
 import PreviousPage from "../Component/Navigation/PreviousPage";
 import { BackButton, HomeButton, ChatButton, ProfileButton } from "../Component/Navigation/Icons";
+import Selected from "../Page/Select/Selected";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -87,6 +88,11 @@ export default function MainStackNavigator() {
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Selected"
+          component={Selected}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

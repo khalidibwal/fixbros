@@ -5,7 +5,7 @@ import { Card } from "@rneui/themed";
 
 export default function CardHome(props){
     return(
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity activeOpacity={0.7} onPress={props.onPress}>
         <Card containerStyle={Styles.card}>
             <View style={Styles.imageSize}>
                 <Image source={props.source}/>

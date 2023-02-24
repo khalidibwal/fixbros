@@ -1,7 +1,60 @@
+// import React, { useState, useEffect } from "react";
+// import { View, StyleSheet } from "react-native";
+// import MapView, { PROVIDER_GOOGLE, AnimatedRegion } from "react-native-maps";
+// import MapCard from "../../Component/Card/MapCard";
+// import axios from "axios";
+
+
+// export default function Tracker() {
+//   const [location, setLocation] = useState(null);
+//   const [errorMsg, setErrorMsg] = useState(null);
+
+//   useEffect(() => {
+//     (async () => {
+      
+//       let { status } = await Location.requestForegroundPermissionsAsync();
+//       if (status !== 'granted') {
+//         setErrorMsg('Permission to access location was denied');
+//         return;
+//       }
+
+//       let location = await Location.getCurrentPositionAsync({});
+//       // setLocation(JSON.stringify(location));
+//       console.warn(JSON.stringify(location))
+//     })();
+//   }, []);
+
+//   return (
+//     <View style={Styles.container}>
+//       <MapView
+//         style={Styles.map}
+//         provider={PROVIDER_GOOGLE}
+//         showsUserLocation
+//         initialRegion={location}
+//         followUserLocation={true}
+//       />
+//       <MapCard />
+//     </View>
+//   );
+// }
+
+// const Styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//   },
+//   map: {
+//     width: "100%",
+//     height: "100%",
+//   },
+// });
+
 import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, View, Button } from "react-native"
+import { StyleSheet, Text, View, Button, ActivityIndicator } from "react-native"
 import * as TaskManager from "expo-task-manager"
 import * as Location from "expo-location"
+import MapView, { PROVIDER_GOOGLE, AnimatedRegion } from "react-native-maps";
+import MapCard from "../../Component/Card/MapCard";
 
 const LOCATION_TASK_NAME = "LOCATION_TASK_NAME"
 let foregroundSubscription = null
@@ -24,15 +77,26 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
 
 export default function Tracker() {
   // Define position state: {latitude: number, longitude: number}
+  let latlng = {
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0,
+    longitudeDelta: 0
+  }
+  const [loading, setLoading] = useState(false)
   const [position, setPosition] = useState(null)
+  const [mapRegion, setmapRegion] = useState(latlng);
+
 
   // Request permissions right after starting the app
   useEffect(() => {
+    setLoading(true)
     const requestPermissions = async () => {
       const foreground = await Location.requestForegroundPermissionsAsync()
       if (foreground.granted) await Location.requestBackgroundPermissionsAsync()
     }
-    requestPermissions()
+    requestPermissions();
+    startForegroundUpdate();
   }, [])
 
   // Start location tracking in foreground
@@ -54,7 +118,15 @@ export default function Tracker() {
         accuracy: Location.Accuracy.BestForNavigation,
       },
       location => {
+        setLoading(false)
         setPosition(location.coords)
+        let latlng = {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.0041,
+          longitudeDelta: 0.0021
+        }
+        setmapRegion(latlng)
       }
     )
   }
@@ -116,32 +188,18 @@ export default function Tracker() {
 
   return (
     <View style={styles.container}>
-      <Text>Longitude: {position?.longitude}</Text>
-      <Text>Latitude: {position?.latitude}</Text>
-      <View style={styles.separator} />
-      <Button
-        onPress={startForegroundUpdate}
-        title="Start in foreground"
-        color="green"
-      />
-      <View style={styles.separator} />
-      <Button
-        onPress={stopForegroundUpdate}
-        title="Stop in foreground"
-        color="red"
-      />
-      <View style={styles.separator} />
-      <Button
-        onPress={startBackgroundUpdate}
-        title="Start in background"
-        color="green"
-      />
-      <View style={styles.separator} />
-      <Button
-        onPress={stopBackgroundUpdate}
-        title="Stop in foreground"
-        color="red"
-      />
+      {loading ?
+      <>
+      <ActivityIndicator size="large"/>
+      <Text>Please wait...</Text>
+      </> 
+       : 
+      <MapView
+      showsUserLocation 
+      style={{ alignSelf: 'stretch', height: '100%' }}
+      region={mapRegion}
+      followUserLocation={true}/>  }
+      <MapCard />
     </View>
   )
 }
@@ -161,6 +219,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   separator: {
-    marginVertical: 8,
+    marginVertical: 18,
+    marginBottom:20
   },
 })

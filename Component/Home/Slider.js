@@ -2,9 +2,9 @@ import React, {useEffect} from "react";
 import { View, ScrollView, Image, StyleSheet } from "react-native";
 
 export default function Slider(props){
-    useEffect(() => {
-       console.warn(props)
-    }, []);
+    // useEffect(() => {
+    //    console.warn(props)
+    // }, []);
     return(
     <ScrollView horizontal={true}>
         {props.mySlider.map((resp)=>{

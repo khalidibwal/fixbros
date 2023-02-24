@@ -7,19 +7,21 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function DetailCard(props) {
+  const navigation = useNavigation();
   return (
     <View>
       <Card containerStyle={Styles.container}>
         {props.loading ? (
             <>
             <ActivityIndicator size="large" style={Styles.loading} />
-            <Text style={Styles.loadingTxt}>Loading...</Text>
+            <Text style={Styles.loadingTxt}>Please Wait...</Text>
           </>
         ) : (     
           props.techdata.map((data) => (
-            <TouchableOpacity style={Styles.appButtonContainer}>
+            <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> navigation.navigate('Tracker')}>
               <Text style={Styles.appButtonText}>{data.name}</Text>
               <Text style={Styles.subButtonText}>{data.title}</Text>
             </TouchableOpacity>

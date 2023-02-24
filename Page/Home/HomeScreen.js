@@ -8,9 +8,9 @@ import { useNavigation } from "@react-navigation/native";
 export default function HomeScreen() {
   const [mySlider, setSlider] = useState([]);
   const navigation = useNavigation();
-  const cardSelected = (selected) =>{
-    navigation.navigate(selected)
-  }
+  const cardSelected = (selected) => {
+    navigation.navigate(selected);
+  };
   useEffect(() => {
     const GetImages = () => {
       axios
@@ -28,24 +28,44 @@ export default function HomeScreen() {
       <Slider mySlider={mySlider} />
       <View style={Styles.Grid}>
         <View>
-          <CardHome source={require("../../assets/home/tires.png")} title='Auto Mechanics' onPress={()=> cardSelected('Selected')} />
+          <CardHome
+            source={require("../../assets/home/tires.png")}
+            title="Auto Mechanics"
+            onPress={() => cardSelected("Selected")}
+          />
         </View>
         <View>
-          <CardHome source={require("../../assets/home/plumbing.png")} title='Plumbing Services' onPress={()=> cardSelected('Selected')} />
+          <CardHome
+            source={require("../../assets/home/plumbing.png")}
+            title="Plumbing Services"
+            onPress={() => cardSelected("Selected")}
+          />
         </View>
         <View>
-          <CardHome source={require("../../assets/home/electronic.png")} title='Electronic Services' />
+          <CardHome
+            source={require("../../assets/home/electronic.png")}
+            title="Electronic Services"
+          />
         </View>
       </View>
       <View style={Styles.Grid}>
         <View>
-          <CardHome source={require("../../assets/home/shoes.png")} title='Taylor & Shoes' />
+          <CardHome
+            source={require("../../assets/home/shoes.png")}
+            title="Taylor & Shoes"
+          />
         </View>
         <View>
-          <CardHome source={require("../../assets/home/ac.png")} title='AC Services' />
+          <CardHome
+            source={require("../../assets/home/ac.png")}
+            title="AC Services"
+          />
         </View>
         <View>
-          <CardHome source={require("../../assets/home/electronic2.png")} title='Electrical Services' />
+          <CardHome
+            source={require("../../assets/home/electronic2.png")}
+            title="Electrical Services"
+          />
         </View>
       </View>
     </View>
@@ -67,8 +87,8 @@ const Styles = StyleSheet.create({
   },
   Grid: {
     flexDirection: "row",
-    justifyContent:'center',
-    alignSelf:'center',
-    bottom:80
+    justifyContent: "center",
+    alignSelf: "center",
+    bottom: 80,
   },
 });

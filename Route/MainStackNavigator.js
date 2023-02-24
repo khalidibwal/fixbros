@@ -10,6 +10,7 @@ import ProfileScreen from "../Page/Profile/ProfileScreen";
 import PreviousPage from "../Component/Navigation/PreviousPage";
 import { BackButton, HomeButton, ChatButton, ProfileButton } from "../Component/Navigation/Icons";
 import Selected from "../Page/Select/Selected";
+import Tracker from "../Page/Tracker/Tracker";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,7 +43,7 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Home"
+        name="HomeTab"
         component={HomeScreen}
         options={{
           headerShown: false,
@@ -79,7 +80,7 @@ function MyTabs() {
 export default function MainStackNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
           name="Home"
           component={MyTabs}
@@ -93,6 +94,11 @@ export default function MainStackNavigator() {
         <Stack.Screen
           name="Selected"
           component={Selected}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Tracker"
+          component={Tracker}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -9,7 +9,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 export default function MapCard({GetLocation, mapRegion}) {
   const {latitude, longitude} = useState([])
   const {myLocation, setLocation} = useContext(ContextPrvd)
-  console.warn(mapRegion)
+  // console.warn(mapRegion)
   return (
     // <Card containerStyle={Styles.container}>
     //     <Input placeholder='Type in Your Locations' />
@@ -31,7 +31,6 @@ export default function MapCard({GetLocation, mapRegion}) {
           </View>
         )}
       />
-      <Text></Text>
     </View>
   );
 }

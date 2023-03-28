@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { StyleSheet, Text, View, Button, ActivityIndicator } from "react-native"
 import * as TaskManager from "expo-task-manager"
 import * as Location from "expo-location"
+import { GoogleAPI } from "../API/GoogleAPI"
 import MapView, { PROVIDER_GOOGLE, AnimatedRegion } from "react-native-maps";
 import MapCard from "../../Component/Card/MapCard";
 
@@ -35,11 +36,17 @@ export default function Tracker() {
   const [loading, setLoading] = useState(false)
   const [position, setPosition] = useState(null)
   const [mapRegion, setmapRegion] = useState(latlng);
+  const [newRegion, setNewRegion] =useState(latlng)
+
+  const GetLocation = (data) => {
+    setNewRegion(data)
+  }
 
 
   // Request permissions right after starting the app
   useEffect(() => {
     setLoading(true)
+    console.warn(newRegion.lat)
     const requestPermissions = async () => {
       const foreground = await Location.requestForegroundPermissionsAsync()
       if (foreground.granted) await Location.requestBackgroundPermissionsAsync()
@@ -70,12 +77,12 @@ export default function Tracker() {
         setLoading(false)
         setPosition(location.coords)
         let latlng = {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
+          latitude: newRegion.lat,
+          longitude: newRegion.lng,
           latitudeDelta: 0.0041,
           longitudeDelta: 0.0021
         }
-        setmapRegion(latlng)
+        setNewRegion(latlng)
       }
     )
   }
@@ -146,9 +153,9 @@ export default function Tracker() {
       <MapView
       showsUserLocation 
       style={{ alignSelf: 'stretch', height: '100%' }}
-      region={mapRegion}
+      region={newRegion}
       followUserLocation={true}/>  }
-      <MapCard />
+      <MapCard GetLocation={GetLocation}/>
     </View>
   )
 }

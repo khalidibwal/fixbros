@@ -18,7 +18,6 @@ export default function Login() {
   };
   const handleUser = (data) => {
     setUser(data);
-    console.warn(data)
   };
   const handlePass = (data) => {
     setPass(data);

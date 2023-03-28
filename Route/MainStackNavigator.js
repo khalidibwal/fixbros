@@ -34,7 +34,7 @@ function MyTabs() {
     >
       <Tab.Screen
         name="Back"
-        component={PreviousPage}
+        component={HomeScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (
@@ -80,17 +80,18 @@ function MyTabs() {
 export default function MainStackNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator>
+      <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Home"
           component={MyTabs}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
+       
         <Stack.Screen
           name="Selected"
           component={Selected}

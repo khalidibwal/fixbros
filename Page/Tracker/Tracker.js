@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { StyleSheet, Text, View, Button, ActivityIndicator } from "react-native"
 import * as TaskManager from "expo-task-manager"
 import * as Location from "expo-location"
 import { GoogleAPI } from "../API/GoogleAPI"
+import { ContextPrvd } from "../../Context/ContextPrvd"
 import MapView, { PROVIDER_GOOGLE, AnimatedRegion } from "react-native-maps";
 import MapCard from "../../Component/Card/MapCard";
 
@@ -27,6 +28,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
 
 export default function Tracker() {
   // Define position state: {latitude: number, longitude: number}
+  const {setLocation , myLocation} = useContext(ContextPrvd)
   let latlng = {
     latitude: 0,
     longitude: 0,
@@ -35,24 +37,35 @@ export default function Tracker() {
   }
   const [loading, setLoading] = useState(false)
   const [position, setPosition] = useState(null)
-  const [mapRegion, setmapRegion] = useState(latlng);
-  const [newRegion, setNewRegion] =useState(latlng)
+  const [mapRegion, setmapRegion] = useState(null);
 
   const GetLocation = (data) => {
-    setNewRegion(data)
+    if(data === undefined){
+      console.warn(null)
+    }
+    else{
+      const latlng = {
+        latitude : data.lat,
+        longitude : data.lng,
+        latitudeDelta: 0.0041,
+        longitudeDelta: 0.0021
+      }
+      setmapRegion(latlng)
+      setLoading(false)
+    }
   }
 
 
   // Request permissions right after starting the app
   useEffect(() => {
     setLoading(true)
-    console.warn(newRegion.lat)
     const requestPermissions = async () => {
       const foreground = await Location.requestForegroundPermissionsAsync()
       if (foreground.granted) await Location.requestBackgroundPermissionsAsync()
     }
-    requestPermissions();
-    startForegroundUpdate();
+    GetLocation();
+    // requestPermissions();
+    // startForegroundUpdate();
   }, [])
 
   // Start location tracking in foreground
@@ -77,12 +90,12 @@ export default function Tracker() {
         setLoading(false)
         setPosition(location.coords)
         let latlng = {
-          latitude: newRegion.lat,
-          longitude: newRegion.lng,
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
           latitudeDelta: 0.0041,
           longitudeDelta: 0.0021
         }
-        setNewRegion(latlng)
+        setmapRegion(latlng)
       }
     )
   }
@@ -153,9 +166,9 @@ export default function Tracker() {
       <MapView
       showsUserLocation 
       style={{ alignSelf: 'stretch', height: '100%' }}
-      region={newRegion}
+      region={mapRegion}
       followUserLocation={true}/>  }
-      <MapCard GetLocation={GetLocation}/>
+      <MapCard GetLocation={GetLocation} mapRegion={mapRegion}/>
     </View>
   )
 }

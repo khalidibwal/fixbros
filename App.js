@@ -7,9 +7,11 @@ import { ContextPrvd } from "./Context/ContextPrvd";
 export default function App() {
   const [myToken, setMyToken] = useState("");
   const [users, setUser] = useState("");
+  const [myLocation, setLocation] = useState({})
   const SyncData = {
     myToken, setMyToken,
-    users, setUser
+    users, setUser,
+    myLocation, setLocation
   };
   return (
     <ContextPrvd.Provider value={SyncData}>

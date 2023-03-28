@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import Input from "../../Component/Login/Input";
-import PassInput from "../../Component/Login/PassInput";
+// import PassInput from "../../Component/Login/PassInput";
 import Button from "../../Component/Login/Button";
 import TechButton from "../../Component/Login/TechButton";
 import { ContextPrvd } from "../../Context/ContextPrvd";
@@ -18,6 +18,7 @@ export default function Login() {
   };
   const handleUser = (data) => {
     setUser(data);
+    console.warn(data)
   };
   const handlePass = (data) => {
     setPass(data);
@@ -58,11 +59,16 @@ export default function Login() {
         placeholder="Email"
         handleUser={(e) => handleUser(e)}
       />
-      <PassInput
+      <Input
+        secureTextEntry={true}
+        placeholder="Password"
+        handleUser={(e) => handlePass(e)}
+      />
+      {/* <PassInput
         secureTextEntry={true}
         placeholder="Password"
         handlePass={(e) => handlePass(e)}
-      />
+      /> */}
       <Text style={Styles.font}>Forgot Password</Text>
       <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> HandleSubmit()}>
             <View>

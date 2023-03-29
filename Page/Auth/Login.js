@@ -63,11 +63,6 @@ export default function Login() {
         placeholder="Password"
         handleUser={(e) => handlePass(e)}
       />
-      {/* <PassInput
-        secureTextEntry={true}
-        placeholder="Password"
-        handlePass={(e) => handlePass(e)}
-      /> */}
       <Text style={Styles.font}>Forgot Password</Text>
       <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> HandleSubmit()}>
             <View>

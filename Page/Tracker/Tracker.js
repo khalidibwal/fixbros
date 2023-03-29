@@ -6,6 +6,7 @@ import {
   Button,
   ActivityIndicator,
 } from "react-native";
+import axios from "axios";
 import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
 import { GoogleAPI } from "../API/GoogleAPI";
@@ -14,6 +15,7 @@ import MapView, {
   PROVIDER_GOOGLE,
   AnimatedRegion,
   Marker,
+  MapMarker,
 } from "react-native-maps";
 import MapCard from "../../Component/Card/MapCard";
 
@@ -48,7 +50,20 @@ export default function Tracker() {
   const [loading, setLoading] = useState(false);
   const [position, setPosition] = useState(null);
   const [mapRegion, setmapRegion] = useState(null);
+  const [myMarker, setMapMarker] = useState([])
+  
+  const liveMarker = () =>{
+    axios.get(`https://x8ki-letl-twmt.n7.xano.io/api:kguvDcNV/global_map`)
+    .then((data)=>(
+      setMapMarker(data.data)
+    ))
+  }
 
+  const ShowMarker = () => {
+    return myMarker.map((response)=>(
+      <Marker coordinate={{latitude: response.marker.data.lat, longitude: response.marker.data.lng}} title="Technician" />
+    ))
+  }
   // Request permissions right after starting the app
   useEffect(() => {
     setLoading(true);
@@ -57,7 +72,7 @@ export default function Tracker() {
       if (foreground.granted)
         await Location.requestBackgroundPermissionsAsync();
     };
-    // GetLocation();
+    liveMarker();
     requestPermissions();
     startForegroundUpdate();
   }, []);
@@ -98,8 +113,8 @@ export default function Tracker() {
             latitudeDelta: 0.0041,
             longitudeDelta: 0.0021,
           };
-          setmapRegion(latlng);
           setLoading(false);
+          setmapRegion(latlng);
         }
       }
     );
@@ -174,7 +189,7 @@ export default function Tracker() {
           region={mapRegion}
           followUserLocation={true}
         >
-          <Marker coordinate={mapRegion} title="Marker" />
+          {ShowMarker()}
         </MapView>
       )}
       <MapCard GetLocation={startForegroundUpdate} mapRegion={mapRegion} />

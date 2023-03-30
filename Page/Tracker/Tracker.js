@@ -15,7 +15,6 @@ import MapView, {
   PROVIDER_GOOGLE,
   AnimatedRegion,
   Marker,
-  MapMarker,
 } from "react-native-maps";
 import MapCard from "../../Component/Card/MapCard";
 
@@ -50,20 +49,29 @@ export default function Tracker() {
   const [loading, setLoading] = useState(false);
   const [position, setPosition] = useState(null);
   const [mapRegion, setmapRegion] = useState(null);
-  const [myMarker, setMapMarker] = useState([])
-  
-  const liveMarker = () =>{
-    axios.get(`https://x8ki-letl-twmt.n7.xano.io/api:kguvDcNV/global_map`)
-    .then((data)=>(
-      setMapMarker(data.data)
-    ))
-  }
+  const [myMarker, setMapMarker] = useState([]);
+
+  const liveMarker = () => {
+    axios
+      .get(`https://x8ki-letl-twmt.n7.xano.io/api:kguvDcNV/global_map`)
+      .then((data) => setMapMarker(data.data));
+  };
 
   const ShowMarker = () => {
-    return myMarker.map((response)=>(
-      <Marker coordinate={{latitude: response.marker.data.lat, longitude: response.marker.data.lng}} title="Technician" />
-    ))
-  }
+    return myMarker.map((response) => (
+      <Marker
+      icon={{
+        url: '../../assets/home/technician.png',
+    }}
+        coordinate={{
+          latitude: response.marker.data.lat,
+          longitude: response.marker.data.lng,
+        }}
+        title={response.technician}
+        key={response.id}
+      />
+    ));
+  };
   // Request permissions right after starting the app
   useEffect(() => {
     setLoading(true);

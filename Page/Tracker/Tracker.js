@@ -2,21 +2,29 @@ import React, { useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
   Text,
+  TextInput,
   View,
   Button,
   ActivityIndicator,
+  Image,
+  TouchableOpacity
 } from "react-native";
 import axios from "axios";
 import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
 import { GoogleAPI } from "../API/GoogleAPI";
 import { ContextPrvd } from "../../Context/ContextPrvd";
+import BottomSheet, {
+  BottomSheetTextInput,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
 import MapView, {
   PROVIDER_GOOGLE,
   AnimatedRegion,
   Marker,
 } from "react-native-maps";
 import MapCard from "../../Component/Card/MapCard";
+import Geolocation from "./Geolocation";
 
 const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
 let foregroundSubscription = null;
@@ -39,7 +47,8 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
 
 export default function Tracker() {
   // Define position state: {latitude: number, longitude: number}
-  const { setLocation, myLocation } = useContext(ContextPrvd);
+  const [openSheet, setOpenSheet] = useState(false);
+  const snapPoints = ["35%"];
   let latlng = {
     latitude: 0,
     longitude: 0,
@@ -50,6 +59,8 @@ export default function Tracker() {
   const [position, setPosition] = useState(null);
   const [mapRegion, setmapRegion] = useState(null);
   const [myMarker, setMapMarker] = useState([]);
+  const [dragMarker, setDragMarker] = useState(null);
+  const [description, setDescription] = useState("");
 
   const liveMarker = () => {
     axios
@@ -60,9 +71,9 @@ export default function Tracker() {
   const ShowMarker = () => {
     return myMarker.map((response) => (
       <Marker
-      icon={{
-        url: '../../assets/home/technician.png',
-    }}
+        icon={{
+          url: "../../assets/home/technician.png",
+        }}
         coordinate={{
           latitude: response.marker.data.lat,
           longitude: response.marker.data.lng,
@@ -80,13 +91,13 @@ export default function Tracker() {
       if (foreground.granted)
         await Location.requestBackgroundPermissionsAsync();
     };
-    liveMarker();
     requestPermissions();
+    liveMarker();
     startForegroundUpdate();
   }, []);
 
   // Start location tracking in foreground
-  const startForegroundUpdate = async (data) => {
+  const startForegroundUpdate = async (data, desc) => {
     // Check if foreground permission is granted
     const { granted } = await Location.getForegroundPermissionsAsync();
     if (!granted) {
@@ -114,6 +125,7 @@ export default function Tracker() {
             longitudeDelta: 0.0021,
           };
           setmapRegion(latlng);
+          stopForegroundUpdate();
         } else {
           const latlng = {
             latitude: data.lat,
@@ -122,7 +134,10 @@ export default function Tracker() {
             longitudeDelta: 0.0021,
           };
           setLoading(false);
+          setDescription(desc);
           setmapRegion(latlng);
+          setDragMarker(latlng);
+          stopForegroundUpdate();
         }
       }
     );
@@ -134,52 +149,11 @@ export default function Tracker() {
     setPosition(null);
   };
 
-  // Start location tracking in background
-  const startBackgroundUpdate = async () => {
-    // Don't track position if permission is not granted
-    const { granted } = await Location.getBackgroundPermissionsAsync();
-    if (!granted) {
-      console.log("location tracking denied");
-      return;
-    }
-
-    // Make sure the task is defined otherwise do not start tracking
-    const isTaskDefined = await TaskManager.isTaskDefined(LOCATION_TASK_NAME);
-    if (!isTaskDefined) {
-      console.log("Task is not defined");
-      return;
-    }
-
-    // Don't track if it is already running in background
-    const hasStarted = await Location.hasStartedLocationUpdatesAsync(
-      LOCATION_TASK_NAME
-    );
-    if (hasStarted) {
-      console.log("Already started");
-      return;
-    }
-
-    await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-      // For better logs, we set the accuracy to the most sensitive option
-      accuracy: Location.Accuracy.BestForNavigation,
-      // Make sure to enable this notification if you want to consistently track in the background
-      showsBackgroundLocationIndicator: true,
-      foregroundService: {
-        notificationTitle: "Location",
-        notificationBody: "Location tracking in background",
-        notificationColor: "#fff",
-      },
-    });
-  };
-
-  // Stop location tracking in background
-  const stopBackgroundUpdate = async () => {
-    const hasStarted = await Location.hasStartedLocationUpdatesAsync(
-      LOCATION_TASK_NAME
-    );
-    if (hasStarted) {
-      await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
-      console.log("Location tacking stopped");
+  const DragMarkerloc = (e) => {
+    if (e === null) {
+      setmapRegion(e);
+    } else {
+      setDragMarker(e);
     }
   };
 
@@ -187,7 +161,10 @@ export default function Tracker() {
     <View style={styles.container}>
       {loading ? (
         <>
-          <ActivityIndicator size="large" />
+          <Image
+            source={require("../../assets/login/fixmelogin.png")}
+            style={styles.loading}
+          />
           <Text>Please wait...</Text>
         </>
       ) : (
@@ -196,11 +173,51 @@ export default function Tracker() {
           style={{ alignSelf: "stretch", height: "100%" }}
           region={mapRegion}
           followUserLocation={true}
+          zoomEnabled={true}
+          scrollEnabled={false}
         >
+          <Marker
+            coordinate={dragMarker ? dragMarker : mapRegion}
+            pinColor="yellow"
+            draggable
+            onDragEnd={(e) => DragMarkerloc(e.nativeEvent.coordinate)}
+          />
           {ShowMarker()}
         </MapView>
       )}
-      <MapCard GetLocation={startForegroundUpdate} mapRegion={mapRegion} />
+      <BottomSheet
+        snapPoints={snapPoints}
+        enableHandlePanningGesture={true}
+        enablePanDownToClose={true}
+        onClose={() => setOpenSheet(false)}
+        backgroundStyle={{ backgroundColor: "#5BABE8" }}
+      >
+        <BottomSheetView>
+          {/* <View>
+            <MapCard
+              GetLocation={startForegroundUpdate}
+              mapRegion={mapRegion}
+            />
+          </View> */}
+          {dragMarker ? (
+            <View>
+              <Geolocation
+                latitude={dragMarker.latitude}
+                longitude={dragMarker.longitude}
+              />
+              <TextInput placeholder="Tambahkan Pesan" style={styles.notes}/>
+              <TouchableOpacity style={styles.appButtonContainer}>
+                <Text style={styles.appButtonText}>Confirm Location</Text>
+              </TouchableOpacity>
+
+            </View>
+          ) : (
+            <Text style={styles.locator}>
+              Hold and Drag The Marker to Your exact Location
+            </Text>
+          )}
+        </BottomSheetView>
+      </BottomSheet>
     </View>
   );
 }
@@ -222,5 +239,38 @@ const styles = StyleSheet.create({
   separator: {
     marginVertical: 18,
     marginBottom: 20,
+  },
+  loading: {
+    width: 100,
+    height: 80,
+  },
+  locator: {
+    marginTop: 35,
+    justifyContent: "center",
+    alignSelf: "center",
+    color: "#fff",
+  },
+  notes: {
+    elevation: 8,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    paddingVertical: 5,
+    marginTop: 20,
+    paddingHorizontal: 10,
+  },
+  appButtonContainer: {
+    elevation: 8,
+    backgroundColor: "#396DA8",
+    borderRadius: 20,
+    paddingVertical: 10,
+    marginTop: 20,
+    paddingHorizontal: 80,
+  },
+  appButtonText: {
+    fontSize: 18,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "capitalize",
   },
 });

@@ -7,7 +7,7 @@ import {
   Button,
   ActivityIndicator,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import axios from "axios";
 import * as TaskManager from "expo-task-manager";
@@ -25,6 +25,7 @@ import MapView, {
 } from "react-native-maps";
 import MapCard from "../../Component/Card/MapCard";
 import Geolocation from "./Geolocation";
+import { Card } from "@rneui/themed";
 
 const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
 let foregroundSubscription = null;
@@ -48,7 +49,9 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
 export default function Tracker() {
   // Define position state: {latitude: number, longitude: number}
   const [openSheet, setOpenSheet] = useState(false);
-  const snapPoints = ["35%"];
+  let snapPoints = ["35%"];
+  let snapmarker = ["20"];
+  let techPoint = ["80%"];
   let latlng = {
     latitude: 0,
     longitude: 0,
@@ -60,6 +63,7 @@ export default function Tracker() {
   const [mapRegion, setmapRegion] = useState(null);
   const [myMarker, setMapMarker] = useState([]);
   const [dragMarker, setDragMarker] = useState(null);
+  const [technician, setTechnician] = useState(0);
   const [description, setDescription] = useState("");
 
   const liveMarker = () => {
@@ -69,20 +73,23 @@ export default function Tracker() {
   };
 
   const ShowMarker = () => {
-    return myMarker.map((response) => (
-      <Marker
-        icon={{
-          url: "../../assets/home/technician.png",
-        }}
-        coordinate={{
-          latitude: response.marker.data.lat,
-          longitude: response.marker.data.lng,
-        }}
-        title={response.technician}
-        key={response.id}
-      />
-    ));
+    return myMarker.map((response) => {
+      return response.user_tech.map((data) => (
+        <Marker
+          icon={{
+            url: "../../assets/home/technician.png",
+          }}
+          coordinate={{
+            latitude: data.marker.data.lat,
+            longitude: data.marker.data.lng,
+          }}
+          title={data.name}
+          key={data.id}
+        />
+      ));
+    });
   };
+
   // Request permissions right after starting the app
   useEffect(() => {
     setLoading(true);
@@ -174,7 +181,6 @@ export default function Tracker() {
           region={mapRegion}
           followUserLocation={true}
           zoomEnabled={true}
-          scrollEnabled={false}
         >
           <Marker
             coordinate={dragMarker ? dragMarker : mapRegion}
@@ -185,39 +191,91 @@ export default function Tracker() {
           {ShowMarker()}
         </MapView>
       )}
-      <BottomSheet
-        snapPoints={snapPoints}
-        enableHandlePanningGesture={true}
-        enablePanDownToClose={true}
-        onClose={() => setOpenSheet(false)}
-        backgroundStyle={{ backgroundColor: "#5BABE8" }}
-      >
-        <BottomSheetView>
-          {/* <View>
+      {technician === 0 ? (
+        <BottomSheet
+          snapPoints={dragMarker ? snapPoints : snapmarker}
+          enableHandlePanningGesture={true}
+          enablePanDownToClose={true}
+          onClose={() => setOpenSheet(false)}
+          backgroundStyle={{ backgroundColor: "#5BABE8" }}
+        >
+          <BottomSheetView>
+            {/* <View>
             <MapCard
               GetLocation={startForegroundUpdate}
               mapRegion={mapRegion}
             />
           </View> */}
-          {dragMarker ? (
+            {dragMarker ? (
+              <View>
+                <Geolocation
+                  latitude={dragMarker.latitude}
+                  longitude={dragMarker.longitude}
+                />
+                <TextInput placeholder="Tambahkan Pesan" style={styles.input} />
+                <TouchableOpacity
+                  style={styles.appButtonContainer}
+                  onPress={() => setTechnician(1)}
+                >
+                  <Text style={styles.appButtonText}>Confirm Location</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View>
+                <Text style={styles.locator}>
+                  Hold and Drag The Marker to Your exact Location
+                </Text>
+                <Text style={styles.locatorSub}>
+                  (Tahan dan Geser Marker ke alamat sesuai lokasi anda)
+                </Text>
+              </View>
+            )}
+          </BottomSheetView>
+        </BottomSheet>
+      ) : (
+        <BottomSheet
+          snapPoints={techPoint}
+          enableHandlePanningGesture={true}
+          enablePanDownToClose={true}
+          onClose={() => setOpenSheet(false)}
+          backgroundStyle={{ backgroundColor: "#5BABE8" }}
+        >
+          <Text style={styles.center}>Select Nearby Mechanic</Text>
+          {myMarker.map((data) => (
             <View>
-              <Geolocation
-                latitude={dragMarker.latitude}
-                longitude={dragMarker.longitude}
-              />
-              <TextInput placeholder="Tambahkan Pesan" style={styles.notes}/>
-              <TouchableOpacity style={styles.appButtonContainer}>
-                <Text style={styles.appButtonText}>Confirm Location</Text>
-              </TouchableOpacity>
-
+              <Card containerStyle={styles.techCard}>
+                <View style={{ flexDirection: "row" }}>
+                  <View style={{justifyContent:'flex-start'}}>
+                    <Image
+                      source={{ uri: data.images.url }}
+                      style={{ width: 80, height: 100, borderRadius: 10 }}
+                    />
+                  </View>
+                  {data.user_tech.map((res) => (
+                    <View style={{justifyContent:'center', alignItems:'center', left:10}}>
+                      <Text style={styles.fontAll}>{res.name}</Text>
+                      {res.subcategory.map((data) => (
+                        <Text>{data.name}</Text>
+                      ))}
+                    </View>
+                  ))}
+                  <View>
+                    <Card containerStyle={styles.techCard}>
+                      <Text>Ask & Bid</Text>
+                    </Card>
+                  </View>
+                </View>
+              </Card>
             </View>
-          ) : (
-            <Text style={styles.locator}>
-              Hold and Drag The Marker to Your exact Location
-            </Text>
-          )}
-        </BottomSheetView>
-      </BottomSheet>
+          ))}
+          <TouchableOpacity
+            style={styles.appButtonContainer}
+            onPress={() => setTechnician(0)}
+          >
+            <Text style={styles.appButtonText}>Back</Text>
+          </TouchableOpacity>
+        </BottomSheet>
+      )}
     </View>
   );
 }
@@ -250,13 +308,23 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "#fff",
   },
-  notes: {
-    elevation: 8,
-    backgroundColor: "#fff",
+  locatorSub: {
+    marginTop: 5,
+    justifyContent: "center",
+    alignSelf: "center",
+    color: "#fff",
+    fontSize: 12,
+  },
+  input: {
+    marginTop: 10,
+    borderColor: "gray",
+    width: "95%",
+    justifyContent: "center",
+    alignSelf: "center",
+    borderWidth: 1,
     borderRadius: 10,
-    paddingVertical: 5,
-    marginTop: 20,
-    paddingHorizontal: 10,
+    padding: 5,
+    backgroundColor: "#fff",
   },
   appButtonContainer: {
     elevation: 8,
@@ -272,5 +340,24 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
     textTransform: "capitalize",
+  },
+  fontAll: {
+    fontSize: 15,
+    fontWeight: "bold",
+    textTransform: "capitalize",
+    justifyContent: "center",
+    alignSelf: "center",
+  },
+  techCard: {
+    borderRadius: 10,
+    justifyContent:'flex-end'
+  },
+  center: {
+    textAlign: "center",
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  cardRow: {
+    flexDirection: "row",
   },
 });

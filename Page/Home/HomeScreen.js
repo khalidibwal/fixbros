@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, StyleSheet, Image } from "react-native";
+import { ContextPrvd } from "../../Context/ContextPrvd";
 import Slider from "../../Component/Home/Slider";
 import CardHome from "../../Component/Card/CardHome";
 import axios from "axios";
@@ -8,10 +9,24 @@ import { useNavigation } from "@react-navigation/native";
 export default function HomeScreen() {
   const [mySlider, setSlider] = useState([]);
   const navigation = useNavigation();
+  const { myToken, userId, setUserId } = useContext(ContextPrvd);
   const cardSelected = (selected) => {
     navigation.navigate(selected);
   };
+  const UserAuth = () => {
+    axios
+      .get(`https://x8ki-letl-twmt.n7.xano.io/api:8sVdsi3L/auth/me`, {
+        headers: {
+          Authorization: "Bearer " + myToken,
+        },
+      })
+      .then((res) => {
+        console.warn(res.data);
+        setUserId(res.data.id);
+      });
+  };
   useEffect(() => {
+    UserAuth();
     const GetImages = () => {
       axios
         .get(`https://x8ki-letl-twmt.n7.xano.io/api:kguvDcNV:v1/slide`)

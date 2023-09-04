@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import { StyleSheet, Image, View, Text, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome,MaterialIcons } from "@expo/vector-icons";
+import { ContextPrvd } from "../Context/ContextPrvd";
 import Login from "../Page/Auth/Login";
 import HomeScreen from "../Page/Home/HomeScreen";
 import ProfileScreen from "../Page/Profile/ProfileScreen";
@@ -11,6 +12,7 @@ import PreviousPage from "../Component/Navigation/PreviousPage";
 import { BackButton, HomeButton, ChatButton, ProfileButton } from "../Component/Navigation/Icons";
 import Selected from "../Page/Select/Selected";
 import Tracker from "../Page/Tracker/Tracker";
+import ChatScreen from "../Page/Chat/ChatScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -78,14 +80,18 @@ function MyTabs() {
   );
 }
 export default function MainStackNavigator() {
+  const {myToken} = useContext(ContextPrvd)
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-      {/* <Stack.Screen
+      {myToken === null ?<Stack.Navigator>
+      <Stack.Screen
           name="Login"
           component={Login}
           options={{ headerShown: false }}
-        /> */}
+        />
+        </Stack.Navigator>
+        :
+        <Stack.Navigator>
         <Stack.Screen
           name="Home"
           component={MyTabs}
@@ -102,7 +108,12 @@ export default function MainStackNavigator() {
           component={Tracker}
           options={{ headerShown: false }}
         />
-      </Stack.Navigator>
+        <Stack.Screen
+          name="chat"
+          component={ChatScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>}
     </NavigationContainer>
   );
 }

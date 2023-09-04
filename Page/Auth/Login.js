@@ -7,11 +7,15 @@ import TechButton from "../../Component/Login/TechButton";
 import { ContextPrvd } from "../../Context/ContextPrvd";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import HomeScreen from "../Home/HomeScreen";
 
 export default function Login() {
   const navigation = useNavigation();
   const [pass, setPass] = useState("");
-  const { users, setUser } = useContext(ContextPrvd);
+  const {
+     users, setUser,
+     myToken, setMyToken, 
+    } = useContext(ContextPrvd);
   const defaultValues = {
     email: users,
     password: pass,
@@ -25,7 +29,7 @@ export default function Login() {
   const HandleSubmit = () => {
     axios
       .post(
-        `https://x8ki-letl-twmt.n7.xano.io/api:kguvDcNV/auth/login`,
+        `https://x8ki-letl-twmt.n7.xano.io/api:8sVdsi3L/auth/login`,
         defaultValues,
         {
           headers: {
@@ -37,8 +41,10 @@ export default function Login() {
         if (response.status === 200) {
           // console.warn(response.data)
           navigation.navigate("Home", {
-            myToken: response.data.authToken,
+            screen: 'homescreen',
+            params : {myToken: response.data.authToken},
           });
+          setMyToken(response.data.authToken)
         }
         else if(response.status !== 200){
             alert('Please Fill The Username Or Password')

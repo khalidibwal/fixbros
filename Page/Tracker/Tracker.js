@@ -26,6 +26,7 @@ import MapView, {
 import MapCard from "../../Component/Card/MapCard";
 import Geolocation from "./Geolocation";
 import { Card } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
 
 const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
 let foregroundSubscription = null;
@@ -49,6 +50,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
 export default function Tracker() {
   // Define position state: {latitude: number, longitude: number}
   const [openSheet, setOpenSheet] = useState(false);
+  const navigation = useNavigation();
   let snapPoints = ["35%"];
   let snapmarker = ["20"];
   let techPoint = ["80%"];
@@ -184,6 +186,7 @@ export default function Tracker() {
         >
           <Marker
             coordinate={dragMarker ? dragMarker : mapRegion}
+            title="Me"
             pinColor="yellow"
             draggable
             onDragEnd={(e) => DragMarkerloc(e.nativeEvent.coordinate)}
@@ -245,14 +248,20 @@ export default function Tracker() {
             <View>
               <Card containerStyle={styles.techCard}>
                 <View style={{ flexDirection: "row" }}>
-                  <View style={{justifyContent:'flex-start'}}>
+                  <View style={{ justifyContent: "flex-start" }}>
                     <Image
                       source={{ uri: data.images.url }}
                       style={{ width: 80, height: 100, borderRadius: 10 }}
                     />
                   </View>
                   {data.user_tech.map((res) => (
-                    <View style={{justifyContent:'center', alignItems:'center', left:10}}>
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        left: 10,
+                      }}
+                    >
                       <Text style={styles.fontAll}>{res.name}</Text>
                       {res.subcategory.map((data) => (
                         <Text>{data.name}</Text>
@@ -260,9 +269,11 @@ export default function Tracker() {
                     </View>
                   ))}
                   <View>
+                    <TouchableOpacity onPress={()=> navigation.navigate('chat')}>
                     <Card containerStyle={styles.techCard}>
                       <Text>Ask & Bid</Text>
                     </Card>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </Card>
@@ -350,7 +361,7 @@ const styles = StyleSheet.create({
   },
   techCard: {
     borderRadius: 10,
-    justifyContent:'flex-end'
+    justifyContent: "flex-end",
   },
   center: {
     textAlign: "center",

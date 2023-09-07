@@ -9,23 +9,31 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import HomeScreen from "../Home/HomeScreen";
 
-export default function Login() {
+export default function SignUp() {
   const navigation = useNavigation();
   const [pass, setPass] = useState("");
+  const [validate, setValidate] = useState(false)
   const {
      users, setUser,
-     myToken, setMyToken, 
+     myToken, setMyToken,
+     phone, setPhone,
+     email, setEmail 
     } = useContext(ContextPrvd);
   const defaultValues = {
-    email: users,
+    name: users,
+    email: email,
     password: pass,
+    phone:phone
   };
-
-  const HandleSignUp = () => {
-    navigation.navigate("SignUp");
-  }
   const handleUser = (data) => {
     setUser(data);
+  };
+  const handleEmail = (data) => {
+    const lowercaseText = data.toLowerCase();
+    setEmail(lowercaseText);
+  };
+  const handlePhone = (data) => {
+    setPhone(data);
   };
   const handlePass = (data) => {
     setPass(data);
@@ -33,7 +41,7 @@ export default function Login() {
   const HandleSubmit = () => {
     axios
       .post(
-        `https://x8ki-letl-twmt.n7.xano.io/api:8sVdsi3L/auth/login`,
+        `https://x8ki-letl-twmt.n7.xano.io/api:kguvDcNV/auth/signup`,
         defaultValues,
         {
           headers: {
@@ -51,10 +59,10 @@ export default function Login() {
           setMyToken(response.data.authToken)
         }
         else if(response.status !== 200){
-            alert('Please Fill The Username Or Password')
+            setValidate(true)
         }
       })
-      .catch((error) => alert(error));
+      .catch((error) => setValidate(true));
   };
   return (
     <View style={Styles.container}>
@@ -62,26 +70,34 @@ export default function Login() {
         source={require("../../assets/login/fixmelogin.png")}
         style={Styles.logo}
       />
-      <Text style={Styles.font}>Login Your Account</Text>
+      <Text style={Styles.font}>Sign Up Here</Text>
       <Input
         secureTextEntry={false}
-        placeholder="Email"
+        placeholder="Fullname"
         handleUser={(e) => handleUser(e)}
+      />
+      <Input
+        placeholder="Email"
+        keyboardType="email-address"
+        handleUser={(e) => handleEmail(e)}
       />
       <Input
         secureTextEntry={true}
         placeholder="Password"
         handleUser={(e) => handlePass(e)}
       />
-      <Text style={Styles.font}>Forgot Password</Text>
+      <Input
+        placeholder="Phone Number"
+        keyboardType="numeric"
+        handleUser={(e) => handlePhone(e)}
+      />
+      {validate ? <Text style={Styles.validation}>Please Fill all the blank</Text> : <></>}
       <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> HandleSubmit()}>
             <View>
-              <Text style={Styles.appButtonText}>Login</Text>
+              <Text style={Styles.appButtonText}>Sign Up</Text>
             </View>
         </TouchableOpacity>
-      <TechButton text="Customer SignUp" onPress={()=> HandleSignUp()} />
-      <Text style={Styles.techFont}>For Technician enrollment</Text>
-      <TechButton text="Technician SignUp" />
+      <TechButton text="Customer SignUp" />
     </View>
   );
 }
@@ -124,4 +140,10 @@ const Styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
   },
+  validation:{
+    color:'red',
+    textAlign:'center',
+    letterSpacing: 1,
+    marginBottom:10
+  }
 });

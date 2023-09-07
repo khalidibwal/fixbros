@@ -6,6 +6,7 @@ export default function Input(props) {
     <>
       <TextInput
         style={Styles.input}
+        keyboardType={props.keyboardType}
         placeholder={props.placeholder}
         secureTextEntry={props.secureTextEntry}
         onChangeText={(e) => props.handleUser(e)}
@@ -17,9 +18,9 @@ export default function Input(props) {
 const Styles = StyleSheet.create({
   input: {
     borderWidth: 1,
-    borderRadius: 22,
+    borderRadius: 12,
     width: "80%",
-    height: 50,
+    height: 46,
     marginTop: 10,
     marginBottom: 30,
     justifyContent: "center",

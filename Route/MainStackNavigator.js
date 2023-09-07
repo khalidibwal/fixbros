@@ -6,6 +6,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome,MaterialIcons } from "@expo/vector-icons";
 import { ContextPrvd } from "../Context/ContextPrvd";
 import Login from "../Page/Auth/Login";
+import NewLogin from "../Page/Auth/NewLogin";
+import SignUp from "../Page/Auth/SignUp";
 import HomeScreen from "../Page/Home/HomeScreen";
 import ProfileScreen from "../Page/Profile/ProfileScreen";
 import PreviousPage from "../Component/Navigation/PreviousPage";
@@ -13,6 +15,7 @@ import { BackButton, HomeButton, ChatButton, ProfileButton } from "../Component/
 import Selected from "../Page/Select/Selected";
 import Tracker from "../Page/Tracker/Tracker";
 import ChatScreen from "../Page/Chat/ChatScreen";
+import SignupView from "../Component/Login/View/SignupView";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -86,7 +89,12 @@ export default function MainStackNavigator() {
       {myToken === null ?<Stack.Navigator>
       <Stack.Screen
           name="Login"
-          component={Login}
+          component={NewLogin}
+          options={{ headerShown: false }}
+        />
+      <Stack.Screen
+          name="SignUp"
+          component={SignUp}
           options={{ headerShown: false }}
         />
         </Stack.Navigator>

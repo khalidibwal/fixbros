@@ -9,11 +9,15 @@ export default function App() {
   const [users, setUser] = useState("");
   const [userId, setUserId] = useState(0);
   const [myLocation, setLocation] = useState("")
+  const [phone, setPhone] = useState("")
+  const [email, setEmail] = useState("")
   const SyncData = {
     myToken, setMyToken,
     users, setUser,
     myLocation, setLocation,
-    userId, setUserId
+    userId, setUserId,
+    phone, setPhone,
+    email, setEmail
   };
   return (
     <ContextPrvd.Provider value={SyncData}>

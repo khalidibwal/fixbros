@@ -21,7 +21,7 @@ const Styles = StyleSheet.create({
         marginBottom: 30,
         justifyContent: "center",
         alignSelf: "center",
-        textAlign: "center",
         backgroundColor: "white",
+        paddingLeft: 10,
       },
 })

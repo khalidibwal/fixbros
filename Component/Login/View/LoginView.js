@@ -9,9 +9,9 @@ export default function LoginView(){
         <View style={Styles.bottomNavigationView}>
           <Text style={Styles.inputText}>Email Address</Text>
           <InputLogin placeholder="Eg. youremail@gmail.com" />
-          <Text>Password</Text>
+          <Text style={Styles.inputText}>Password</Text>
           <InputLogin placeholder="Password" />
-          <TouchableOpacity>
+          <TouchableOpacity style={Styles.forgetpass}>
             <Text style={Styles.forgetpass}>Forgot Password?</Text>
           </TouchableOpacity>
           <Button text="Login" />
@@ -21,17 +21,23 @@ export default function LoginView(){
 }
 
 const Styles = StyleSheet.create({
-    bottomNavigationView: {
-        backgroundColor: "#fff",
-        width: "100%",
-        height: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        borderTopLeftRadius: 20, // Adjust the radius as needed
-        borderTopRightRadius: 20, // Adjust the radius as needed
-        overflow: "hidden", // Clip the content to the rounded shape
-      },
-      forgetpass: {
-        color: "#5BABE8",
-      },
+  bottomNavigationView: {
+    backgroundColor: "#fff",
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    borderTopLeftRadius: 20, // Adjust the radius as needed
+    borderTopRightRadius: 20, // Adjust the radius as needed
+    overflow: "hidden", // Clip the content to the rounded shape
+  },
+  forgetpass: {
+    color: "#5BABE8",
+    alignItems:'center'
+  },
+  inputText:{
+    textAlign:'left',
+    marginLeft:45,
+    fontWeight:'400',
+    fontSize:14
+  }
 })

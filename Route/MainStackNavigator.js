@@ -16,6 +16,7 @@ import Selected from "../Page/Select/Selected";
 import Tracker from "../Page/Tracker/Tracker";
 import ChatScreen from "../Page/Chat/ChatScreen";
 import SignupView from "../Component/Login/View/SignupView";
+import GoogleAuthTest from "../Component/Login/GoogleAutTest";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -89,7 +90,7 @@ export default function MainStackNavigator() {
       {myToken === null ?<Stack.Navigator>
       <Stack.Screen
           name="Login"
-          component={NewLogin}
+          component={GoogleAuthTest}
           options={{ headerShown: false }}
         />
       <Stack.Screen

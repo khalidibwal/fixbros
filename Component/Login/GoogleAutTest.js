@@ -1,26 +1,30 @@
 import React from 'react';
+import * as WebBrowser from 'expo-web-browser';
 import { View, Button, StyleSheet } from 'react-native';
 import { AuthSession } from 'expo-auth-session';
 import { useAuthRequest as useGoogleAuthRequest } from 'expo-auth-session/providers/google';
-// import { makeRedirectUri, useAuthRequest, ResponseType } from 'expo-auth-session';
+import { useNavigation } from "@react-navigation/native";
 
-// const GOOGLE_ANDROID_CLIENT_ID = 'YOUR_ANDROID_CLIENT_ID';
-// const GOOGLE_IOS_CLIENT_ID = 'YOUR_IOS_CLIENT_ID';
-
+WebBrowser.maybeCompleteAuthSession();
 export default function GoogleAuthTest() {
+  const navigation = useNavigation();
   const [request, response, promptAsync] = useGoogleAuthRequest(
     {
-      clientId: '620987370599-pfu5apg1b9us8sbd0ghj590htsvs7cr5.apps.googleusercontent.com', // Your Google OAuth client ID
+      androidClientId: '620987370599-lca68bb3alu4pofurjfahr0i1u21qmsu.apps.googleusercontent.com', // Your Google OAuth client ID
+      // clientId: '620987370599-pfu5apg1b9us8sbd0ghj590htsvs7cr5.apps.googleusercontent.com',
+      // clientSecret: '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',
       scopes: ['openid', 'profile', 'email'],
-      redirectUri: 'com.khalid1995.fixme'
+      redirectUri: 'com.khalid1995.fixme:/oauth2callback'
     },
   );
 
   React.useEffect(() => {
+    console.warn(response)
     if (response?.type === 'success') {
       // Handle success, e.g., obtain user data
       console.warn('success')
-      console.log('Authorization Code:', response.params.code);
+      console.warn('Authorization Code:', response.params.code);
+      navigation.navigate('SignUp')
     } else if (response?.type === 'error') {
       console.warn('failed')
       // Handle error

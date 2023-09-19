@@ -13,6 +13,7 @@ import Googlebtn from "../../Component/Login/Googlebtn";
 import { BottomSheet } from "react-native-btr";
 import InputLogin from "../../Component/Login/InputLogin";
 import LoginView from "../../Component/Login/View/LoginView";
+import SignupView from "../../Component/Login/View/SignupView";
 
 export default function NewLogin() {
   const [visible, setVisible] = useState(false);
@@ -34,13 +35,14 @@ export default function NewLogin() {
   );
 
   const renderScene = SceneMap({
-    first: LoginView,
+    first: SignupView,
     second: LoginView,
   });
 
   const toggleBottomNavigationView = () => {
     //Toggling the visibility state of the bottom sheet
     setVisible(!visible);
+
   };
   return (
     <View style={Styles.container}>
@@ -59,7 +61,8 @@ export default function NewLogin() {
           text="Create Account"
           onPress={() => toggleBottomNavigationView()}
         />
-        <Button text="Login" />
+        <Button text="Login" 
+        onPress={() => toggleBottomNavigationView()}/>
         <Text style={Styles.termscondition}>
           By logging in or registering, you have agreed to the Terms and
           Conditions and Privacy Policy.
@@ -71,15 +74,14 @@ export default function NewLogin() {
         onBackdropPress={toggleBottomNavigationView}
       >
         <View style={Styles.bottomSheetContainer}>
-        <TabView
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          style={Styles.tabView}
-          renderTabBar={renderTabBar}
-        />
+          <TabView
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            style={Styles.tabView}
+            renderTabBar={renderTabBar}
+          />
         </View>
-        
       </BottomSheet>
     </View>
   );
@@ -92,16 +94,16 @@ const Styles = StyleSheet.create({
   },
   bottomSheetContainer: {
     flex: 1,
-    backgroundColor: 'white', // Background color of the bottom sheet
+    backgroundColor: "white", // Background color of the bottom sheet
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingHorizontal: 1,
     paddingTop: 16,
-    maxHeight:550
+    maxHeight: 550,
   },
   tabView: {
     flex: 1, // Ensure the TabView takes the available space
-    backgroundColor: 'transparent', // Make the TabView transparent
+    backgroundColor: "transparent", // Make the TabView transparent
   },
   logo: {
     justifyContent: "center",
@@ -139,12 +141,12 @@ const Styles = StyleSheet.create({
     textAlign: "left",
   },
   tabBar: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   indicator: {
-    backgroundColor: '#5BABE8', // Change the indicator color
+    backgroundColor: "#5BABE8", // Change the indicator color
   },
-  label:{
-    color:'black'
-  }
+  label: {
+    color: "black",
+  },
 });

@@ -1,8 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, StyleSheet, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { ContextPrvd } from "../../Context/ContextPrvd";
 import Slider from "../../Component/Home/Slider";
 import CardHome from "../../Component/Card/CardHome";
+import SearchInput from "../../Component/Home/SearchInput";
+import Location from "../../Component/Home/Location";
+import Geolocation from "../Tracker/Geolocation";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
@@ -37,51 +46,38 @@ export default function HomeScreen() {
   return (
     <View style={Styles.container}>
       <Image
-        source={require("../../assets/login/fixmelogin.png")}
+        source={require("../../assets/login/fixbros1.png")}
         style={Styles.logo}
       />
-      <Slider mySlider={mySlider} />
+      <Location/>
+      <SearchInput />
+      <View>
+        <Slider mySlider={mySlider} />
+      </View>
+
       <View style={Styles.Grid}>
-        <View>
-          <CardHome
-            source={require("../../assets/home/tires.png")}
-            title="Auto Mechanics"
-            onPress={() => cardSelected("Selected")}
-          />
-        </View>
-        <View>
-          <CardHome
-            source={require("../../assets/home/plumbing.png")}
-            title="Plumbing Services"
-            onPress={() => cardSelected("Selected")}
-          />
-        </View>
-        <View>
-          <CardHome
-            source={require("../../assets/home/electronic.png")}
-            title="Electronic Services"
-          />
-        </View>
+        <CardHome
+          source={require("../../assets/home/hammer.png")}
+          onPress={() => cardSelected("Selected")}
+        />
+
+        <CardHome
+          source={require("../../assets/home/pipe.png")}
+          onPress={() => cardSelected("Selected")}
+        />
+        <CardHome source={require("../../assets/home/phone.png")} />
       </View>
       <View style={Styles.Grid}>
-        <View>
-          <CardHome
-            source={require("../../assets/home/shoes.png")}
-            title="Taylor & Shoes"
-          />
-        </View>
-        <View>
-          <CardHome
-            source={require("../../assets/home/ac.png")}
-            title="AC Services"
-          />
-        </View>
-        <View>
-          <CardHome
-            source={require("../../assets/home/electronic2.png")}
-            title="Electrical Services"
-          />
-        </View>
+        <CardHome
+          source={require("../../assets/home/ac.png")}
+          onPress={() => cardSelected("Selected")}
+        />
+
+        <CardHome
+          source={require("../../assets/home/seed.png")}
+          onPress={() => cardSelected("Selected")}
+        />
+        <CardHome source={require("../../assets/home/battery.png")} />
       </View>
     </View>
   );
@@ -104,6 +100,7 @@ const Styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignSelf: "center",
-    bottom: 80,
+    margin: 10,
+    top: 50,
   },
 });

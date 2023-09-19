@@ -7,7 +7,7 @@ export default function InputLogin(props){
         keyboardType={props.keyboardType}
         placeholder={props.placeholder}
         secureTextEntry={props.secureTextEntry}
-        onChangeText={(e) => props.handleUser(e)}
+        onChangeText={(e) => props.onChangeText(e)}
       />);
 }
 

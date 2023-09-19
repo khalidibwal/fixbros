@@ -1,9 +1,36 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
+import { useAuthRequest as useGoogleAuthRequest } from 'expo-auth-session/providers/google';
 
 export default function Googlebtn(props) {
+
+  const [request, response, promptAsync] = useGoogleAuthRequest(
+    {
+      androidClientId: '620987370599-lca68bb3alu4pofurjfahr0i1u21qmsu.apps.googleusercontent.com', // Your Google OAuth client ID
+      scopes: ['openid', 'profile', 'email'],
+      redirectUri: 'com.khalid1995.fixme:/oauth2callback'
+    },
+  );
+
+  React.useEffect(() => {
+    console.warn(response)
+    if (response?.type === 'success') {
+      // Handle success, e.g., obtain user data
+      console.warn('success')
+      console.warn('Authorization Code:', response.params.code);
+      navigation.navigate('SignUp')
+    } else if (response?.type === 'error') {
+      console.warn('failed')
+      // Handle error
+      console.error('Authorization Error:');
+    }
+  }, [response]);
+
+  const handleGoogleSignIn = () => {
+    promptAsync();
+  };
   return (
-    <TouchableOpacity style={Styles.appButtonContainer} onPress={props.onPress}>
+    <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> handleGoogleSignIn()}>
       <Image
         source={require("../../assets/login/ic_google.png")}
         style={Styles.image}

@@ -5,7 +5,7 @@ import { AuthSession } from 'expo-auth-session';
 import { useAuthRequest as useGoogleAuthRequest } from 'expo-auth-session/providers/google';
 import { useNavigation } from "@react-navigation/native";
 
-WebBrowser.maybeCompleteAuthSession();
+WebBrowser.maybeCompleteAuthSession()
 export default function GoogleAuthTest() {
   const navigation = useNavigation();
   const [request, response, promptAsync] = useGoogleAuthRequest(

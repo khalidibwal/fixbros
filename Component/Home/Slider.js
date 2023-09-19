@@ -18,9 +18,10 @@ export default function Slider(props){
 
 const Styles = StyleSheet.create({
     slider:{
-        width: 400,
-        height: 350,
+        width: 339,
+        height: 180,
         resizeMode: "stretch",
-        marginTop:10
+        marginTop:10,
+        borderRadius:20
       }
 })

@@ -90,7 +90,7 @@ export default function MainStackNavigator() {
       {myToken === null ?<Stack.Navigator>
       <Stack.Screen
           name="Login"
-          component={GoogleAuthTest}
+          component={NewLogin}
           options={{ headerShown: false }}
         />
       <Stack.Screen

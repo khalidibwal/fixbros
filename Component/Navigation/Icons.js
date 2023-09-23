@@ -5,7 +5,7 @@ import { FontAwesome, Ionicons, Entypo, MaterialIcons } from "@expo/vector-icons
 const BackButton = (props) => {
   return (
     <View>
-      <Ionicons name="chevron-back" size={25} color="#396DA8" onPress={()=>props.onPress} style={props.style} />
+      <Ionicons name="chevron-back" size={25} color="#396DA8" onPress={()=>props.onPress} />
     </View>
   );
 };

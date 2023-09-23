@@ -27,6 +27,7 @@ import MapCard from "../../Component/Card/MapCard";
 import Geolocation from "./Geolocation";
 import { Card } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
 let foregroundSubscription = null;
@@ -195,6 +196,7 @@ export default function Tracker() {
         </MapView>
       )}
       {technician === 0 ? (
+        <GestureHandlerRootView>
         <BottomSheet
           snapPoints={dragMarker ? snapPoints : snapmarker}
           enableHandlePanningGesture={true}
@@ -235,7 +237,9 @@ export default function Tracker() {
             )}
           </BottomSheetView>
         </BottomSheet>
+        </GestureHandlerRootView>
       ) : (
+        <GestureHandlerRootView>
         <BottomSheet
           snapPoints={techPoint}
           enableHandlePanningGesture={true}
@@ -286,6 +290,7 @@ export default function Tracker() {
             <Text style={styles.appButtonText}>Back</Text>
           </TouchableOpacity>
         </BottomSheet>
+        </GestureHandlerRootView>
       )}
     </View>
   );

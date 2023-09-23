@@ -32,7 +32,7 @@ export default function DetailCard(props) {
           ))
         )}
        
-      <RoundedCard cardWidth={Styles.container.width}/>
+      {/* <RoundedCard cardWidth={Styles.container.width}/> */}
       </Card>
     </View>
   );

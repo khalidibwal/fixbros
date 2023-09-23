@@ -8,12 +8,15 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import RoundedCard from "../Navigation/RoundedCard";
 
 export default function DetailCard(props) {
   const navigation = useNavigation();
   return (
     <View>
       <Card containerStyle={Styles.container}>
+        <Text style={Styles.catTXT}>Pilih Kebutuhan Anda Berdasarkan</Text>
+        <Text style={Styles.catTXT}>Kategori Berikut : </Text>
         {props.loading ? (
             <>
             <ActivityIndicator size="large" style={Styles.loading} />
@@ -21,12 +24,15 @@ export default function DetailCard(props) {
           </>
         ) : (     
           props.techdata.map((data) => (
+            <View style={Styles.marTop}>
             <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> navigation.navigate('Tracker')}>
               <Text style={Styles.appButtonText}>{data.name}</Text>
-              <Text style={Styles.subButtonText}>{data.title}</Text>
             </TouchableOpacity>
+            </View>
           ))
         )}
+       
+      <RoundedCard cardWidth={Styles.container.width}/>
       </Card>
     </View>
   );
@@ -37,12 +43,12 @@ const Styles = StyleSheet.create({
     position: "absolute",
     backgroundColor: "#5BABE8",
     flexDirection: "row",
-    height: 700,
+    height: 500,
     width: "100%",
     justifyContent: "center",
     alignSelf: "center",
     bottom: 0,
-    top: 60,
+    top: 100,
     borderRadius: 20,
   },
   subCard: {
@@ -83,5 +89,13 @@ const Styles = StyleSheet.create({
   },
   loadingTxt:{
     color:'#fff'
+  },
+  catTXT:{
+    color: "#fff",
+    fontSize: 16,
+    alignSelf: "center",
+  },
+  marTop:{
+    marginTop:15
   }
 });

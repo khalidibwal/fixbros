@@ -20,7 +20,8 @@ export default function LoginView(){
   };
 
   const handleUser = (data) => {
-    setUser(data);
+    const lowercaseText = data.toLowerCase();
+    setUser(lowercaseText);
   };
   const handlePass = (data) => {
     setPass(data);
@@ -57,7 +58,7 @@ export default function LoginView(){
           <Text style={Styles.inputText}>Email Address</Text>
           <InputLogin placeholder="Eg. youremail@gmail.com" onChangeText={(e)=>handleUser(e) } />
           <Text style={Styles.inputText}>Password</Text>
-          <InputLogin placeholder="Password" onChangeText={(e)=>handlePass(e) }/>
+          <InputLogin placeholder="Password" onChangeText={(e)=>handlePass(e) } secureTextEntry={true}/>
           <TouchableOpacity style={Styles.forgetpass}>
             <Text style={Styles.forgetpass}>Forgot Password?</Text>
           </TouchableOpacity>

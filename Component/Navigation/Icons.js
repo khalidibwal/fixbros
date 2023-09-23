@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { FontAwesome, Ionicons, Entypo, MaterialIcons } from "@expo/vector-icons";
 
-const BackButton = () => {
+const BackButton = (props) => {
   return (
     <View>
-      <Ionicons name="chevron-back" size={25} color="#396DA8"  />
+      <Ionicons name="chevron-back" size={25} color="#396DA8" onPress={()=>props.onPress} style={props.style} />
     </View>
   );
 };

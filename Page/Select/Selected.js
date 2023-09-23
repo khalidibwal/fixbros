@@ -1,11 +1,18 @@
 import React, {useEffect, useState} from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import DetailCard from "../../Component/Card/DetailCard";
+import { BackButton } from "../../Component/Navigation/Icons";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-export default function Selected(){
+export default function Selected(props){
     const [techdata, setTechData] = useState([])
     const [loading, setLoading] = useState(false)
+    const navigation = useNavigation(); // Get the navigation object
+
+    const goBack = ()=> {
+        navigation.goBack();
+    }
     useEffect(() => {
         const TechList = () =>{
             setLoading(true)
@@ -18,8 +25,11 @@ export default function Selected(){
 
     return(
         <View style={Styles.container}>
-            <Image source={require('../../assets/login/fixmelogin.png')} style={Styles.logo}/>
-            <Text style={Styles.font}>Please Select One Of The List :</Text>
+            <TouchableOpacity onPress={()=> goBack()}>
+            <BackButton style={Styles.backStyle}/>
+            </TouchableOpacity>
+            
+            <Image source={require('../../assets/login/selectedils.png')} style={Styles.logo}/>
             <DetailCard techdata={techdata} loading={loading}/>
         </View>
     )
@@ -33,15 +43,11 @@ const Styles = StyleSheet.create({
     logo:{
         justifyContent:'center',
         alignSelf:'center',
-        width:200,
-        height:150,
-        marginTop:50
+        resizeMode:'stretch',
+        top:80
     },
-    font:{
-        textAlign:'center',
-        letterSpacing:1,
-        top:30,
-        color:'#396DA8',
-        fontSize:15
-    },
+    backStyle:{
+        margin:10,
+        top:50
+    }
 })

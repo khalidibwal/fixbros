@@ -6,6 +6,7 @@ import { ContextPrvd } from "./Context/ContextPrvd";
 
 export default function App() {
   const [myToken, setMyToken] = useState(null);
+  const [names, setNames] = useState(null)
   const [users, setUser] = useState("");
   const [userId, setUserId] = useState(0);
   const [myLocation, setLocation] = useState("")
@@ -13,6 +14,7 @@ export default function App() {
   const [email, setEmail] = useState("")
   const SyncData = {
     myToken, setMyToken,
+    names, setNames,
     users, setUser,
     myLocation, setLocation,
     userId, setUserId,

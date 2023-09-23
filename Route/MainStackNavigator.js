@@ -102,7 +102,7 @@ export default function MainStackNavigator() {
         :
         <Stack.Navigator>
         <Stack.Screen
-          name="Home"
+          name="HomeScreen"
           component={MyTabs}
           options={{ headerShown: false }}
         />

@@ -26,14 +26,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
     borderRadius: 15,
     paddingHorizontal: 10,
-    margin:30,
+    margin:20,
     height:50
   },
   searchIcon: {
     marginRight: 10,
   },
   input: {
-    flex: 1,
+    
     fontSize: 16,
     color: "#333",
   },

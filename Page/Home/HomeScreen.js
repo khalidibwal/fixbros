@@ -11,6 +11,7 @@ import Slider from "../../Component/Home/Slider";
 import CardHome from "../../Component/Card/CardHome";
 import SearchInput from "../../Component/Home/SearchInput";
 import Location from "../../Component/Home/Location";
+import Services from "../../Component/Home/Services";
 import Geolocation from "../Tracker/Geolocation";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
@@ -53,6 +54,7 @@ export default function HomeScreen() {
       <SearchInput />
       <View>
         <Slider mySlider={mySlider} />
+        {/* <Services/> */}
       </View>
 
       <View style={Styles.Grid}>

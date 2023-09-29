@@ -17,6 +17,7 @@ import Tracker from "../Page/Tracker/Tracker";
 import ChatScreen from "../Page/Chat/ChatScreen";
 import SignupView from "../Component/Login/View/SignupView";
 import GoogleAuthTest from "../Component/Login/GoogleAutTest";
+import PaymentScreen from "../Page/Payment/PaymentScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -103,7 +104,7 @@ export default function MainStackNavigator() {
         <Stack.Navigator>
         <Stack.Screen
           name="HomeScreen"
-          component={MyTabs}
+          component={PaymentScreen}
           options={{ headerShown: false }}
         />
        

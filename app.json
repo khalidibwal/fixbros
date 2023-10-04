@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/icons/fixmelogo3.png",
+      "image": "./assets/icons/fixmelogo5.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

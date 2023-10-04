@@ -52,7 +52,11 @@ const Styles = StyleSheet.create({
     top: 80,
   },
   backStyle: { // Ensure the TouchableOpacity takes up all available space
-    margin:15,
-    top: 50,
+    position: "absolute",
+    top: 16,
+    left: 16,
+    backgroundColor: "white",
+    padding: 12,
+    borderRadius: 8,
   },
 });

@@ -13,11 +13,13 @@ import ProfileScreen from "../Page/Profile/ProfileScreen";
 import PreviousPage from "../Component/Navigation/PreviousPage";
 import { BackButton, HomeButton, ChatButton, ProfileButton } from "../Component/Navigation/Icons";
 import Selected from "../Page/Select/Selected";
-import Tracker from "../Page/Tracker/Tracker";
+// import Tracker from "../Page/Tracker/Tracker";
+import ShowMap from "../Page/Tracker/ShowMap";
 import ChatScreen from "../Page/Chat/ChatScreen";
 import SignupView from "../Component/Login/View/SignupView";
 import GoogleAuthTest from "../Component/Login/GoogleAutTest";
 import PaymentScreen from "../Page/Payment/PaymentScreen";
+import Tracker from "../Page/Tracker/Tracker";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -104,7 +106,7 @@ export default function MainStackNavigator() {
         <Stack.Navigator>
         <Stack.Screen
           name="HomeScreen"
-          component={PaymentScreen}
+          component={MyTabs}
           options={{ headerShown: false }}
         />
        
@@ -115,7 +117,7 @@ export default function MainStackNavigator() {
         />
         <Stack.Screen
           name="Tracker"
-          component={Tracker}
+          component={ShowMap}
           options={{ headerShown: false }}
         />
         <Stack.Screen

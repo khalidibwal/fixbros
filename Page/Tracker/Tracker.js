@@ -172,7 +172,7 @@ export default function Tracker() {
       {loading ? (
         <>
           <Image
-            source={require("../../assets/login/fixmelogin.png")}
+            source={require("../../assets/icons/fixmelogo5.png")}
             style={styles.loading}
           />
           <Text>Please wait...</Text>

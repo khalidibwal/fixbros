@@ -16,6 +16,7 @@ import Selected from "../Page/Select/Selected";
 // import Tracker from "../Page/Tracker/Tracker";
 import ShowMap from "../Page/Tracker/ShowMap";
 import ChatScreen from "../Page/Chat/ChatScreen";
+import ClientScreen from "../Page/Chat/ClientScreen";
 import SignupView from "../Component/Login/View/SignupView";
 import GoogleAuthTest from "../Component/Login/GoogleAutTest";
 import PaymentScreen from "../Page/Payment/PaymentScreen";
@@ -123,6 +124,11 @@ export default function MainStackNavigator() {
         <Stack.Screen
           name="chat"
           component={ChatScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="client"
+          component={ClientScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>}

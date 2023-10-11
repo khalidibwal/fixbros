@@ -22,7 +22,7 @@ import Input from "../../Component/Tracker/Input";
 import PermissionDenied from "../../Component/Tracker/PermissionDenied";
 import { BottomSheet } from "react-native-btr";
 import SMCard from "../../Component/Card/SMCard";
-// import Input from "../../Component/Login/Input";
+import TechList from "../../Component/Tracker/TechList";
 
 const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
 let foregroundSubscription = null;
@@ -59,6 +59,7 @@ export default function ShowMap() {
   const [myMarker, setMapMarker] = useState([]);
   const [dragMarker, setDragMarker] = useState(null);
   const [description, setDescription] = useState("");
+  const [visible, setVisible] = useState(false);
 
   const ShowMarker = () => {
     return myMarker.map((response) => {
@@ -76,6 +77,11 @@ export default function ShowMap() {
         />
       ));
     });
+  };
+
+  const toggleBottomNavigationView = () => {
+    //Toggling the visibility state of the bottom sheet
+    setVisible(!visible);
   };
 
   // Request permissions right after starting the app
@@ -187,7 +193,17 @@ export default function ShowMap() {
               style={styles.backStyle}
             />
           </TouchableOpacity>
-          <SMCard text='Confirim Location'/>
+          <SMCard
+            text="Confirim Location"
+            onPress={() => toggleBottomNavigationView()}
+          />
+          <BottomSheet
+            visible={visible}
+            onBackButtonPress={toggleBottomNavigationView}
+            onBackdropPress={toggleBottomNavigationView}
+          >
+            <TechList />
+          </BottomSheet>
         </>
       )}
     </View>
@@ -227,14 +243,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 5,
     backgroundColor: "#fff",
-  },
-  bottomSheetContainer: {
-    flex: 1,
-    backgroundColor: "white", // Background color of the bottom sheet
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    paddingHorizontal: 1,
-    paddingTop: 16,
-    maxHeight: 550,
   },
 });

@@ -6,6 +6,7 @@ import axios from "axios";
 import InputLogin from "../InputLogin";
 import Button from "../../../Component/Login/Button";
 import Googlebtn from "../Googlebtn";
+import GoogleAuthTest from "../GoogleAutTest";
 
 export default function SignupView() {
   const navigation = useNavigation();

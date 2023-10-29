@@ -86,6 +86,7 @@ export default function SignupView() {
       </TouchableOpacity>
       <Button text="Create Account" onPress={() => HandleSubmit()} />
       <Googlebtn text="Login With Google" />
+      {/* <GoogleAuthTest/> */}
     </View>
   );
 }

@@ -15,7 +15,13 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function TechList(props) {
   const [ListTech, setListTech] = useState(null);
-  const navigate = useNavigation()
+  const navigation = useNavigation()
+
+  const ChatScreen = (data) =>{
+    navigation.navigate('client',{
+      data
+    })
+  }
 
   const getGlobalTechList = () => {
     axios
@@ -48,7 +54,7 @@ export default function TechList(props) {
                     <Text style={Styles.nameStyle}>{resp.title}</Text>
                   </View>
                   <View style={Styles.profileGap}>
-                    <TouchableOpacity style={Styles.appButtonContainer}>
+                    <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> ChatScreen(data.id)}>
                       <Text style={Styles.selectStyle}>Select</Text>
                     </TouchableOpacity>
                   </View>

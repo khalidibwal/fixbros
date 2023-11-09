@@ -15,6 +15,7 @@ import { BackButton, HomeButton, ChatButton, ProfileButton } from "../Component/
 import Selected from "../Page/Select/Selected";
 // import Tracker from "../Page/Tracker/Tracker";
 import ShowMap from "../Page/Tracker/ShowMap";
+import BookedScreen from "../Page/Select/BookedScreen";
 import ChatScreen from "../Page/Chat/ChatScreen";
 import ClientScreen from "../Page/Chat/ClientScreen";
 import SignupView from "../Component/Login/View/SignupView";
@@ -119,6 +120,11 @@ export default function MainStackNavigator() {
         <Stack.Screen
           name="Tracker"
           component={ShowMap}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Booked"
+          component={BookedScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

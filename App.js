@@ -9,6 +9,7 @@ export default function App() {
   const [names, setNames] = useState(null)
   const [users, setUser] = useState("");
   const [userId, setUserId] = useState(0);
+  const [MyID, setmyID] = useState(0);
   const [myLocation, setLocation] = useState("")
   const [phone, setPhone] = useState("")
   const [email, setEmail] = useState("")
@@ -18,6 +19,7 @@ export default function App() {
     users, setUser,
     myLocation, setLocation,
     userId, setUserId,
+    MyID, setmyID,
     phone, setPhone,
     email, setEmail
   };

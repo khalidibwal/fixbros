@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "plugins": ["@react-native-google-signin/google-signin"],
     "splash": {
       "image": "./assets/icons/fixmelogo5.png",
       "resizeMode": "contain",
@@ -25,12 +26,24 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.khalid1995.fixme"
+      "package": "com.khalid1995.fixme",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "com.khalid1995.fixme",
+              "host": "oauth2redirect"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "fixme",
+    "scheme": "com.khalid1995.fixme",
     "extra": {
       "eas": {
         "projectId": "fdb303db-fd43-43c2-8319-3b88a7e45545"

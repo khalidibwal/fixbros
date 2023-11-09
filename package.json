@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4",
+    "@pubnub/react-native-chat-components": "^0.32.0",
     "@react-native-community/geolocation": "^3.0.5",
+    "@react-native-google-signin/google-signin": "^10.0.1",
     "@react-navigation/bottom-tabs": "^6.5.4",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
@@ -27,6 +29,7 @@
     "expo-status-bar": "~1.6.0",
     "expo-task-manager": "~11.3.0",
     "expo-web-browser": "~12.3.2",
+    "pubnub": "^7.4.1",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-geocode": "^0.2.3",

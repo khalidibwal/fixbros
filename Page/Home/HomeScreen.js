@@ -19,7 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function HomeScreen() {
   const [mySlider, setSlider] = useState([]);
   const navigation = useNavigation();
-  const { myToken, userId, setUserId, setNames } = useContext(ContextPrvd);
+  const { myToken, userId, setUserId, setNames, setmyID } = useContext(ContextPrvd);
   const cardSelected = (selected) => {
     navigation.navigate(selected);
   };
@@ -33,6 +33,7 @@ export default function HomeScreen() {
       .then((res) => {
         console.warn(res.data);
         setUserId(res.data.id);
+        setmyID(res.data.id)
         setNames(res.data.name)
       });
   };

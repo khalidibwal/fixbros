@@ -2,15 +2,14 @@ import React from "react";
 import { Card } from "@rneui/themed";
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from "react-native";
 
-export default function SMCard(props) {
+export default function BidCard(props) {
   return (
     <View style={Styles.container}>
       <Card containerStyle={Styles.card}>
-        <Text style={Styles.cFirmStyle}>Confirm Your Location</Text>
-        <TextInput style={Styles.input} placeholder="Type In Your Location" />
+        <TextInput style={Styles.input} placeholder="Ask Technicians & mechanic here"/>
         <TouchableOpacity style={Styles.appButtonContainer} onPress={props.onPress}>
             <View>
-              <Text style={Styles.appButtonText}>{props.text}</Text>
+              <Text style={Styles.appButtonText}>{props.title}</Text>
             </View>
         </TouchableOpacity>
       </Card>
@@ -46,7 +45,6 @@ const Styles = StyleSheet.create({
     padding: 5,
     height: 50,
     backgroundColor: "#fff",
-    textAlign:'center'
   },
   cFirmStyle: {
     left: 15,

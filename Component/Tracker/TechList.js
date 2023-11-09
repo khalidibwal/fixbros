@@ -18,7 +18,7 @@ export default function TechList(props) {
   const navigation = useNavigation()
 
   const ChatScreen = (data) =>{
-    navigation.navigate('client',{
+    navigation.navigate('Booked',{
       data
     })
   }

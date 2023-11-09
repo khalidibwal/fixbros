@@ -8,9 +8,9 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import RoundedCard from "../Navigation/RoundedCard";
 
-export default function DetailCard(props) {
+
+export default function ChooseCard(props) {
   const navigation = useNavigation();
   return (
     <View>
@@ -19,36 +19,14 @@ export default function DetailCard(props) {
         <Text style={Styles.catTXT}>Kategori Berikut : </Text>
         <View style={Styles.marTop}>
             <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> navigation.navigate('Tracker')}>
-              <Text style={Styles.appButtonText}>Perbaikan (Repair)</Text>
+              <Text style={Styles.appButtonText}>Panggil Sekarang</Text>
             </TouchableOpacity>
         </View>
         <View style={Styles.marTop}>
             <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> navigation.navigate('Tracker')}>
-              <Text style={Styles.appButtonText}>Renovasi / Upgrade</Text>
+              <Text style={Styles.appButtonText}>Booking / Jadwalkan</Text>
             </TouchableOpacity>
         </View>
-        <View style={Styles.marTop}>
-            <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> navigation.navigate('Tracker')}>
-              <Text style={Styles.appButtonText}>Borongan</Text>
-              <Text style={Styles.appButtonText}>(Whole Package)</Text>
-            </TouchableOpacity>
-        </View>
-        {/* {props.loading ? (
-            <>
-            <ActivityIndicator size="large" style={Styles.loading} />
-            <Text style={Styles.loadingTxt}>Please Wait...</Text>
-          </>
-        ) : (     
-          props.techdata.map((data) => (
-            <View style={Styles.marTop}>
-            <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> navigation.navigate('Tracker')}>
-              <Text style={Styles.appButtonText}>{data.name}</Text>
-            </TouchableOpacity>
-            </View>
-          ))
-        )} */}
-       
-      {/* <RoundedCard cardWidth={Styles.container.width}/> */}
       </Card>
     </View>
   );

@@ -61,6 +61,17 @@ export default function ShowMap() {
   const [description, setDescription] = useState("");
   const [visible, setVisible] = useState(false);
 
+  const handleLocationSelection = (location) => {
+    // Update the mapRegion based on the selected location
+    console.log(location)
+    setmapRegion({
+      latitude: location.latitude,
+      longitude: location.longitude,
+      latitudeDelta: 0.0041,
+      longitudeDelta: 0.0021,
+    });
+  };
+
   const ShowMarker = () => {
     return myMarker.map((response) => {
       return response.user_tech.map((data) => (
@@ -196,6 +207,7 @@ export default function ShowMap() {
           <SMCard
             text="Confirim Location"
             onPress={() => toggleBottomNavigationView()}
+            handleLocationSelection={handleLocationSelection}
           />
           <BottomSheet
             visible={visible}

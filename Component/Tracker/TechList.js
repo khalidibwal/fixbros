@@ -17,9 +17,9 @@ export default function TechList(props) {
   const [ListTech, setListTech] = useState(null);
   const navigation = useNavigation()
 
-  const ChatScreen = (data) =>{
+  const ChatScreen = (id,name) =>{
     navigation.navigate('Booked',{
-      data
+      dataId:id, dataName: name
     })
   }
 
@@ -54,7 +54,7 @@ export default function TechList(props) {
                     <Text style={Styles.nameStyle}>{resp.title}</Text>
                   </View>
                   <View style={Styles.profileGap}>
-                    <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> ChatScreen(data.id)}>
+                    <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> ChatScreen(data.id,data.name)}>
                       <Text style={Styles.selectStyle}>Select</Text>
                     </TouchableOpacity>
                   </View>

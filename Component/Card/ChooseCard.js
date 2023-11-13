@@ -15,8 +15,6 @@ export default function ChooseCard(props) {
   return (
     <View>
       <Card containerStyle={Styles.container}>
-        <Text style={Styles.catTXT}>Pilih Kebutuhan Anda Berdasarkan</Text>
-        <Text style={Styles.catTXT}>Kategori Berikut : </Text>
         <View style={Styles.marTop}>
             <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> navigation.navigate('Tracker')}>
               <Text style={Styles.appButtonText}>Panggil Sekarang</Text>
@@ -25,6 +23,11 @@ export default function ChooseCard(props) {
         <View style={Styles.marTop}>
             <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> navigation.navigate('Tracker')}>
               <Text style={Styles.appButtonText}>Booking / Jadwalkan</Text>
+            </TouchableOpacity>
+        </View>
+        <View style={Styles.marTop}>
+            <TouchableOpacity style={Styles.appButtonCancel} onPress={()=> navigation.navigate('Tracker')}>
+              <Text style={Styles.appButtonText}>Cancel</Text>
             </TouchableOpacity>
         </View>
       </Card>
@@ -37,21 +40,13 @@ const Styles = StyleSheet.create({
     position: "absolute",
     backgroundColor: "#5BABE8",
     flexDirection: "row",
-    height: 500,
+    height: 350,
     width: "100%",
     justifyContent: "center",
     alignSelf: "center",
-    bottom: 0,
-    top: 100,
     borderRadius: 20,
-  },
-  subCard: {
-    borderRadius: 10,
-    backgroundColor: "#396DA8",
-    justifyContent: "center",
-    alignSelf: "center",
-    height: 50,
-    width: 400,
+    bottom:0,
+    top:100
   },
   fontCard: {
     textAlign: "center",
@@ -63,6 +58,14 @@ const Styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 10,
     marginTop: 20,
+    paddingHorizontal: 80,
+  },
+  appButtonCancel: {
+    elevation: 5,
+    backgroundColor: "#BEC5D1",
+    borderRadius: 10,
+    paddingVertical: 7,
+    marginTop: 30,
     paddingHorizontal: 80,
   },
   appButtonText: {

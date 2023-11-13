@@ -2,13 +2,16 @@ import React, { useEffect, useState, useContext } from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import ChooseCard from "../../Component/Card/ChooseCard";
 import { BackButton } from "../../Component/Navigation/Icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { FontAwesome, Ionicons, Entypo, MaterialIcons } from "@expo/vector-icons";
 import RoundPro from "../../Component/Profile/RoundPro";
 import { ContextPrvd } from "../../Context/ContextPrvd";
+import HomeLocation from "../../Component/Home/HomeLocation";
 import axios from "axios";
 
 export default function BookedScreen(props) {
+  const route = useRoute();
+  const { dataId, dataName } = route.params || {};
   const [techdata, setTechData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation(); // Get the navigation object
@@ -37,9 +40,11 @@ export default function BookedScreen(props) {
         <RoundPro source={require('../../assets/profiles/team.jpeg')}/>
         </View>
         <View style={Styles.Grid2}>
-        <Text style={Styles.Title}>{names}</Text>
+        <Text style={Styles.Title}>{dataName}</Text>
         </View>
-
+        <View style={Styles.Grid2}>
+        <HomeLocation/>
+        </View>
       <ChooseCard />
     </View>
   );

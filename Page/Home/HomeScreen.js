@@ -10,7 +10,7 @@ import { ContextPrvd } from "../../Context/ContextPrvd";
 import Slider from "../../Component/Home/Slider";
 import CardHome from "../../Component/Card/CardHome";
 import SearchInput from "../../Component/Home/SearchInput";
-import Location from "../../Component/Home/Location";
+import HomeLocation from "../../Component/Home/HomeLocation";
 import Services from "../../Component/Home/Services";
 import Geolocation from "../Tracker/Geolocation";
 import axios from "axios";
@@ -52,7 +52,7 @@ export default function HomeScreen() {
         source={require("../../assets/login/fixbros1.png")}
         style={Styles.logo}
       />
-      <Location/>
+      <HomeLocation/>
       <SearchInput />
       <View>
         <Slider mySlider={mySlider} />

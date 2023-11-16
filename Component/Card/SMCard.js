@@ -17,7 +17,6 @@ export default function SMCard(props) {
     <View style={Styles.container}>
       <Card containerStyle={Styles.card}>
         <Text style={Styles.cFirmStyle}>Confirm Your Location</Text>
-        <TextInput onPressIn={()=> setShowAutocomplete(true)}/>
       
         <GooglePlacesAutocomplete
           fetchDetails={true}
@@ -27,7 +26,7 @@ export default function SMCard(props) {
               position: "absolute",
               top: 50,
               left: 10,
-              width: "90%",
+              width: "95%",
               maxHeight: 200,
               borderColor: "#ccc",
               borderWidth: 1,
@@ -37,6 +36,7 @@ export default function SMCard(props) {
           }}
           placeholder="Search for a location"
           onPress={(data, details = null) => {
+            console.log('detail baru',details.formatted_address)
             if (details) {
               props.handleLocationSelection({
                 latitude: details.geometry.location.lat,
@@ -96,6 +96,7 @@ const Styles = StyleSheet.create({
   cFirmStyle: {
     left: 15,
     color: "#fff",
+    marginTop:15
   },
   appButtonContainer: {
     elevation: 1,

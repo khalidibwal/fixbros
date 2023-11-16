@@ -40,12 +40,12 @@ export default function HomeLocation() {
             const addressParts = myAddress.split(",");
             const streetAddress = addressParts[0].trim(); // "Jl. Kenanga V No.20"
             const neighborhood = addressParts[1].trim(); // "Ragajaya"
-            setCity(neighborhood);
+            setCity(streetAddress,neighborhood);
 
             if (cityComponent) {
-              setCity(neighborhood);
+              setCity(streetAddress,neighborhood);
             } else {
-              setCity(neighborhood);
+              setCity(streetAddress,neighborhood);
             }
           }
         } catch (error) {
@@ -59,7 +59,7 @@ export default function HomeLocation() {
       <View style={Styles.Grid}>
         <Entypo
           name="location-pin"
-          size={30}
+          size={20}
           color="#5BABE8"
           style={Styles.pin}
         />
@@ -69,7 +69,7 @@ export default function HomeLocation() {
         ) : (
           <ActivityIndicator />
         )}
-        <View style={Styles.pin}>
+        <View style={Styles.avatarPin}>
           <RoundAvatar source={require("../../assets/profiles/team.jpeg")} />
         </View>
       </View>
@@ -93,4 +93,7 @@ const Styles = StyleSheet.create({
   pin: {
     margin: 5,
   },
+  avatarPin:{
+    marginBottom:10
+  }
 });

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   ScrollView,
+  Image
 } from "react-native";
 import { BottomSheet } from "react-native-btr";
 import RoundPro from "../Profile/RoundPro";
@@ -17,9 +18,9 @@ export default function TechList(props) {
   const [ListTech, setListTech] = useState(null);
   const navigation = useNavigation()
 
-  const ChatScreen = (id,name) =>{
+  const ChatScreen = (id,name,images) =>{
     navigation.navigate('Booked',{
-      dataId:id, dataName: name
+      dataId:id, dataName: name, dataImages: images
     })
   }
 
@@ -32,6 +33,7 @@ export default function TechList(props) {
 
   useEffect(() => {
     getGlobalTechList();
+    console.log('test')
   }, []);
 
   return (
@@ -46,7 +48,7 @@ export default function TechList(props) {
                 <View style={Styles.Grid2} key={resp.id}>
                   <View style={Styles.profileGap}>
                     <RoundPro
-                      source={require("../../assets/login/fixbros1.png")}
+                      source={{uri: response.images.url}}
                     />
                   </View>
                   <View style={Styles.profileGap}>
@@ -54,7 +56,7 @@ export default function TechList(props) {
                     <Text style={Styles.nameStyle}>{resp.title}</Text>
                   </View>
                   <View style={Styles.profileGap}>
-                    <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> ChatScreen(data.id,data.name)}>
+                    <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> ChatScreen(data.id,data.name,response.images.url)}>
                       <Text style={Styles.selectStyle}>Select</Text>
                     </TouchableOpacity>
                   </View>

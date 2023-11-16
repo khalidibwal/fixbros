@@ -62,8 +62,6 @@ export default function ShowMap() {
   const [visible, setVisible] = useState(false);
 
   const handleLocationSelection = (location) => {
-    // Update the mapRegion based on the selected location
-    console.log(location)
     setmapRegion({
       latitude: location.latitude,
       longitude: location.longitude,

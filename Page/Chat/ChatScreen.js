@@ -8,7 +8,7 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState([]);
   const { users, setUser, myToken, userId, setUserId } = useContext(ContextPrvd);
   const route = useRoute();
-  const Technician = route.params.data;
+  const Technician = route.params.IdUser;
 
   const GetMessage = () => {
     axios
@@ -32,7 +32,7 @@ export default function ChatScreen() {
 
   useEffect(() => {
     GetMessage();
-    console.warn(userId)
+    console.warn(Technician)
   }, []);
 
   const onSend = useCallback((messages = []) => {

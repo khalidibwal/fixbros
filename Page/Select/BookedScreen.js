@@ -1,70 +1,71 @@
 import React, { useEffect, useState, useContext } from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
-import ChooseCard from "../../Component/Card/ChooseCard";
-import { BackButton } from "../../Component/Navigation/Icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { FontAwesome, Ionicons, Entypo, MaterialIcons } from "@expo/vector-icons";
-import RoundPro from "../../Component/Profile/RoundPro";
-import { ContextPrvd } from "../../Context/ContextPrvd";
-import HomeLocation from "../../Component/Home/HomeLocation";
 import axios from "axios";
+
+import ChooseCard from "../../Component/Card/ChooseCard";
+import RoundPro from "../../Component/Profile/RoundPro";
+import HomeLocation from "../../Component/Home/HomeLocation";
+import { ContextPrvd } from "../../Context/ContextPrvd";
 
 export default function BookedScreen(props) {
   const route = useRoute();
-  const { dataId, dataName } = route.params || {};
+  const { dataId, dataName, dataImages } = route.params || {};
   const [techdata, setTechData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigation = useNavigation(); // Get the navigation object
+  const navigation = useNavigation(); 
   const { users, setUser, names } = useContext(ContextPrvd);
 
-  const goBack = () => {
-    navigation.goBack();
-  };
   useEffect(() => {
-    const TechList = () => {
-      setLoading(true);
-      axios
-        .get(`https://x8ki-letl-twmt.n7.xano.io/api:kguvDcNV:v1/subcategory`)
-        .then((resp) => setTechData(resp.data))
-        .then(setLoading(false));
+    const fetchTechList = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`https://x8ki-letl-twmt.n7.xano.io/api:kguvDcNV:v1/subcategory`);
+        setTechData(response.data);
+      } catch (error) {
+        console.error('Error fetching tech data:', error);
+      } finally {
+        setLoading(false);
+      }
     };
-    TechList();
+
+    fetchTechList();
   }, []);
 
+  const goBack = () => navigation.goBack();
+
   return (
-    <View style={Styles.container}>
-      <TouchableOpacity onPress={() => goBack()} style={Styles.backStyle}>
-        <Image source={require('../../assets/navigation/back.png')}/>
+      <View style={styles.container}>
+      <TouchableOpacity onPress={goBack} style={styles.backStyle}>
+        <Image source={require("../../assets/navigation/back.png")} />
       </TouchableOpacity>
-        <View style={Styles.Grid2}>
-        <RoundPro source={require('../../assets/profiles/team.jpeg')}/>
-        </View>
-        <View style={Styles.Grid2}>
-        <Text style={Styles.Title}>{dataName}</Text>
-        </View>
-        <View style={Styles.Grid2}>
-        <HomeLocation/>
-        </View>
-      <ChooseCard />
+      <View style={styles.grid2}>
+        <RoundPro source={{uri:dataImages}} />
+      </View>
+      <View style={styles.grid2}>
+        <Text style={styles.title}>{dataName}</Text>
+      </View>
+      <View style={styles.grid2}>
+        <HomeLocation />
+      </View>
+      <View style={styles.grid3}>
+        <Text>Keahlian :</Text>
+      </View>
+      <View style={styles.grid2}>
+        <Text>Alat :</Text>
+      </View>
+      
+      <ChooseCard userID={dataId} />
     </View>
   );
 }
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
   },
-  logo: {
-    justifyContent: "center",
-    alignSelf: "center",
-    resizeMode: "stretch",
-    top: 80,
-  },
-  Title:{
-    color:'#396DA8'
-  },
-  backStyle: { // Ensure the TouchableOpacity takes up all available space
+  backStyle: {
     position: "absolute",
     top: 16,
     left: 16,
@@ -72,11 +73,22 @@ const Styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
   },
-  Grid2: {
+  grid2: {
     flexDirection: "row",
     justifyContent: "center",
     alignSelf: "center",
     margin: 10,
-    top:50
+    top:20
+  },
+  grid3: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignSelf: "center",
+    margin: 10,
+    top:20
+  },
+
+  title: {
+    color: "#396DA8",
   },
 });

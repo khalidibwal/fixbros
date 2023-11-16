@@ -16,8 +16,8 @@ const RoundAvatar = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 30, // Adjust the width of the rounded container
-    height: 30, // Adjust the height of the rounded container
+    width: 35, // Adjust the width of the rounded container
+    height: 35, // Adjust the height of the rounded container
     borderRadius: 100, // Half of the width or height to make it circular
     overflow: 'hidden', // Clip the content to fit within the rounded shape
   },

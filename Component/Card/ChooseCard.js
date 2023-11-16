@@ -16,7 +16,9 @@ export default function ChooseCard(props) {
     <View>
       <Card containerStyle={Styles.container}>
         <View style={Styles.marTop}>
-            <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> navigation.navigate('Tracker')}>
+            <TouchableOpacity style={Styles.appButtonContainer} onPress={()=> navigation.navigate('chat',{
+              IdUser : props.userID
+            })}>
               <Text style={Styles.appButtonText}>Panggil Sekarang</Text>
             </TouchableOpacity>
         </View>
@@ -26,7 +28,7 @@ export default function ChooseCard(props) {
             </TouchableOpacity>
         </View>
         <View style={Styles.marTop}>
-            <TouchableOpacity style={Styles.appButtonCancel} onPress={()=> navigation.navigate('Tracker')}>
+            <TouchableOpacity style={Styles.appButtonCancel} onPress={()=> navigation.goBack()}>
               <Text style={Styles.appButtonText}>Cancel</Text>
             </TouchableOpacity>
         </View>
@@ -38,15 +40,14 @@ export default function ChooseCard(props) {
 const Styles = StyleSheet.create({
   container: {
     position: "absolute",
+    flexDirection:'row',
     backgroundColor: "#5BABE8",
-    flexDirection: "row",
     height: 350,
     width: "100%",
     justifyContent: "center",
     alignSelf: "center",
     borderRadius: 20,
-    bottom:0,
-    top:100
+    top:200
   },
   fontCard: {
     textAlign: "center",
